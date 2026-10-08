@@ -57,9 +57,9 @@ cargo build && honk       # tell me when it's done
 
 | Style | Sounds like | Try it |
 | --- | --- | --- |
-| `bulb` (default) | A squeezed rubber bulb horn on a vintage car | `honk` |
+| `car` (default) | A classic dual-tone car horn, two notes a major third apart | `honk` |
+| `bulb` | A squeezed rubber bulb horn on a vintage car | `honk --style bulb` |
 | `awooga` | The Model T klaxon: "a-WOO-ga" | `honk --style awooga` |
-| `car` | A classic dual-tone car horn, two notes a major third apart | `honk --style car` |
 | `truck` | A low, slowly beating air horn | `honk --style truck` |
 | `clown` | A short, high, wobbly squeak | `honk --style clown` |
 

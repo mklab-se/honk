@@ -75,7 +75,7 @@ template leftover.
 ## Command surface (stage 2)
 
 ```
-honk                              # "Honk, honk!": default style bulb, 2 honks
+honk                              # "Honk, honk!": default style car (bulb until 0.2.1), 2 honks
 honk --style awooga               # bulb | awooga | car | truck | clown
 honk --times 3 --long             # number of honks, longer honks
 honk --pitch 1.5 --volume 0.6     # pitch multiplier 0.5 to 2.0, volume 0.0 to 1.0

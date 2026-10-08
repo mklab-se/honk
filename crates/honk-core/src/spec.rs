@@ -40,7 +40,7 @@ pub struct HonkSpec {
 impl Default for HonkSpec {
     fn default() -> Self {
         HonkSpec {
-            style: Style::Bulb,
+            style: Style::Car,
             times: 2,
             long: false,
             pitch: 1.0,
@@ -134,6 +134,7 @@ mod tests {
         let (spec, warnings) =
             HonkSpec::resolve(&Config::default(), &Overrides::default()).unwrap();
         assert_eq!(spec, HonkSpec::default());
+        assert_eq!(spec.style, Style::Car);
         assert!(warnings.is_empty());
     }
 

@@ -41,7 +41,8 @@ fn wav_writes_a_file_instead_of_playing() {
     let dir = tempfile::tempdir().unwrap();
     let out = dir.path().join("h.wav");
     honk().arg("--wav").arg(&out).assert().success().stdout("");
-    assert_eq!(wav_len(&out), 2 * 9702 + 5292);
+    // Default: two 0.35 s car honks with one 0.1 s gap.
+    assert_eq!(wav_len(&out), 2 * 15435 + 4410);
 }
 
 #[test]
@@ -54,7 +55,7 @@ fn flags_shape_the_honk() {
         .arg(&out)
         .assert()
         .success();
-    assert_eq!(wav_len(&out), 19404);
+    assert_eq!(wav_len(&out), 30870);
     honk()
         .args(["--pitch", "1.5", "--volume", "0.5", "--wav"])
         .arg(&out)
@@ -131,7 +132,7 @@ fn config_defaults_apply_and_broken_config_is_survivable() {
         .arg(&out)
         .assert()
         .success();
-    assert_eq!(wav_len(&out), 9702);
+    assert_eq!(wav_len(&out), 15435);
 
     std::fs::write(cfg_dir.join("config.yaml"), "volume: 7\n").unwrap();
     honk()

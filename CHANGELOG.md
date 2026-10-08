@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A detailed car: in terminals of at least 80x18, honk draws a 1920s roadster in Braille dots
   (60x16) with the honk bursting out of its bell horn. Smaller terminals keep the small ASCII car.
 
+### Changed
+
+- The default horn is now `car` (the dual-tone car horn) instead of `bulb`. `--style bulb` or
+  `style: bulb` in `config.yaml` brings the old default back.
+
 ### Removed
 
 - The `honk ai` command and the Ailloy dependency, inherited from the MKLab tool template but

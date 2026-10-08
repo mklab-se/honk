@@ -8,9 +8,9 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Style {
-    #[default]
     Bulb,
     Awooga,
+    #[default]
     Car,
     Truck,
     Clown,
@@ -183,8 +183,8 @@ mod tests {
     }
 
     #[test]
-    fn default_is_bulb() {
-        assert_eq!(Style::default(), Style::Bulb);
+    fn default_is_car() {
+        assert_eq!(Style::default(), Style::Car);
     }
 
     #[test]
