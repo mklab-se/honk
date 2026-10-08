@@ -17,6 +17,11 @@ pub fn play(samples: Vec<f32>) -> Playback {
     if std::env::var_os("HONK_NO_AUDIO").is_some() {
         return Playback::NoDevice("disabled by HONK_NO_AUDIO".into());
     }
+    // alsa-lib prints its own "cannot find card" lines straight to stderr when
+    // there is no sound card (servers, CI). Collect them in a buffer on this
+    // thread instead; honk reports the problem once, in its own words.
+    #[cfg(target_os = "linux")]
+    let _alsa_errors = alsa::Output::local_error_handler().ok();
     let mut handle = match rodio::DeviceSinkBuilder::open_default_sink() {
         Ok(h) => h,
         Err(e) => return Playback::NoDevice(e.to_string()),

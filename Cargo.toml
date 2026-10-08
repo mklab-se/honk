@@ -66,6 +66,8 @@ hound = "3.5"
 # Playback only: no decoders, we synthesise everything. Needs ALSA headers
 # (libasound2-dev) to build on Linux.
 rodio = { version = "0.22", default-features = false, features = ["playback"] }
+# Same version cpal uses; only for silencing alsa-lib's stderr chatter on Linux.
+alsa = "0.11"
 
 # Testing
 assert_cmd = "2.2"

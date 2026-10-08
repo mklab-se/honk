@@ -1021,6 +1021,7 @@ name = "honk"
 version = "0.1.0"
 dependencies = [
  "ailloy",
+ "alsa",
  "anyhow",
  "assert_cmd",
  "chrono",
