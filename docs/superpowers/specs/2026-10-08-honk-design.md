@@ -17,7 +17,7 @@ built to be useful as a notifier in scripts and terminals (`cargo build && honk`
 | Base | Generated from `mklab-se/rusty-tmpl`; MKLab standard applies (MIT, public, crates.io, GitHub Release, Homebrew tap) |
 | Sound source | Synthesised in Rust, no bundled audio files |
 | Playback | `rodio` 0.22 on macOS (CoreAudio) and Windows (WASAPI). Linux, amended 2026-10-08 after 0.2.0: a WAV piped into the system player (`pw-play`, `paplay` or `aplay`), because linking ALSA broke `cargo install` on stock Linux machines |
-| AI | The template's ailloy integration (`honk ai ...`) is kept as is; AI-driven features come later |
+| AI | None. Amended 2026-10-08 after 0.2.1: the template's ailloy integration (`honk ai ...`) was removed (YAGNI; 25% of the binary, 67 crates). Re-add from rusty-tmpl when an AI feature is designed |
 | Delivery | Two stages, each ending in a release (see "Stages") |
 
 ## Stages

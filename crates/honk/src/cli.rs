@@ -93,12 +93,6 @@ fn parse_volume(s: &str) -> Result<f32, String> {
 
 #[derive(clap::Subcommand)]
 pub enum Commands {
-    /// Manage AI features (shows status when run without a subcommand)
-    Ai {
-        #[command(subcommand)]
-        command: Option<AiCommands>,
-    },
-
     /// Generate shell completions
     Completion {
         /// Shell to generate completions for
@@ -108,23 +102,6 @@ pub enum Commands {
 
     /// Show version information
     Version,
-}
-
-#[derive(clap::Subcommand)]
-pub enum AiCommands {
-    /// Test AI integration by sending a message
-    Test {
-        /// Message to send (default: "Say hello in one sentence.")
-        message: Option<String>,
-    },
-    /// Enable AI features for honk
-    Enable,
-    /// Disable AI features for honk
-    Disable,
-    /// Interactively configure AI provider and model settings
-    Config,
-    /// Show AI status (same as running `honk ai` without a subcommand)
-    Status,
 }
 
 /// Shells supported by `honk completion`.
@@ -140,7 +117,6 @@ impl Cli {
     /// Dispatch to the selected subcommand. Returns the process exit code.
     pub async fn run(self) -> Result<i32> {
         match self.command {
-            Some(Commands::Ai { command }) => crate::commands::ai::run(command).await.map(|()| 0),
             Some(Commands::Completion { shell }) => {
                 crate::commands::completion::generate_completions(shell);
                 Ok(0)

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Removed
+
+- The `honk ai` command and the Ailloy dependency, inherited from the MKLab tool template but
+  unused. The binary shrinks by a quarter (11.2 MB to 8.5 MB on macOS) and builds 67 fewer
+  crates. AI features may return later, designed for honk.
+
 ## [0.2.1] - 2026-10-08
 
 ### Fixed

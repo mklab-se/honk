@@ -287,3 +287,9 @@ fn windows_cmd_shims_on_path_are_found() {
         .assert()
         .code(3);
 }
+
+/// Ailloy was dropped (YAGNI): there is no `ai` subcommand.
+#[test]
+fn there_is_no_ai_subcommand() {
+    honk().arg("ai").assert().code(2);
+}

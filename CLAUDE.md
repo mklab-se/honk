@@ -47,7 +47,7 @@ A two-crate Cargo workspace:
     play (with the car unless `-q`) or write `--wav`.
   - `commands/run.rs`: `honk -- cmd`; spawns without a shell, inherits stdio, maps the exit
     status (signals to 128 + n, spawn failure to 127), honks happy or sad.
-  - `commands/ai.rs`, `commands/completion.rs`: template plumbing.
+  - `commands/completion.rs`: template plumbing.
   - `audio.rs`: playback with a 100 ms silent tail; rodio on macOS/Windows, `player.rs` on
     Linux. No device (or `HONK_NO_AUDIO`) is `Playback::NoDevice`, never an error.
   - `player.rs`: Linux only; pipes a WAV into the first working system player.
@@ -79,15 +79,15 @@ A two-crate Cargo workspace:
 
 ## AI integration
 
-`commands/ai.rs` wraps [Ailloy](https://crates.io/crates/ailloy) via its `config_tui` helpers and the
-shared global config (`~/.config/ailloy/config.yaml`). To call a model from a command, use
-`ailloy::Client`. The capability list is the `CAPABILITIES` const in `ai.rs` (`["chat"]`).
+None, on purpose. The template's Ailloy `ai` command was removed (YAGNI, 2026-10-08): it cost a
+quarter of the binary (11.2 MB to 8.5 MB) and 67 crates while nothing used it. To add AI features
+later, copy `commands/ai.rs` and the `ailloy` dependency back from `../rusty-tmpl/`.
 
 ## Conventions
 
-- Edition 2024, MSRV 1.88 (`[workspace.package]`; set by Ailloy, 1.88 since 2.x and still in 3.0).
+- Edition 2024, MSRV 1.88 (`[workspace.package]`; let-chains need 1.88).
 - All deps are declared in the root `[workspace.dependencies]` and inherited with `.workspace = true`.
-  Current majors: clap 4.6, tokio 1.53, colored 3, dirs 7, thiserror 2, ailloy 3.0, reqwest 0.13.
+  Current majors: clap 4.6, tokio 1.53, colored 3, dirs 7, thiserror 2, reqwest 0.13, rodio 0.22 (macOS/Windows only).
   YAML is `serde_norway` 0.9, the maintained drop-in fork of the deprecated `serde_yaml`
   (chosen fleet-wide 2026-10-07).
 - Audio: macOS and Windows play through `rodio`; Linux pipes a WAV into `pw-play`, `paplay` or
