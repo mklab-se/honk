@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <strong>honk 0.1</strong> is here: the very first honk, in text form. Real sound arrives in 0.2.
+  <strong>honk 0.2</strong> is here: real, synthesised honks in five styles, plus notifier mode.
   <a href="CHANGELOG.md">What's new</a>
 </p>
 
@@ -29,35 +29,106 @@ brew install mklab-se/tap/honk
 ```
 
 ```bash
-honk
+honk                      # Honk, honk!
+honk --style awooga       # a-WOO-ga
+cargo build && honk       # tell me when it's done
 ```
 
 ```text
-Honk, honk!
+     ______
+  __/  |   \___  o< ) )   HONK!
+ |_  _ |  _  __|
+   (_)    (_)
 ```
+
+## Five horns
+
+| Style | Sounds like | Try it |
+| --- | --- | --- |
+| `bulb` (default) | A squeezed rubber bulb horn on a vintage car | `honk` |
+| `awooga` | The Model T klaxon: "a-WOO-ga" | `honk --style awooga` |
+| `car` | A classic dual-tone car horn, two notes a major third apart | `honk --style car` |
+| `truck` | A low, slowly beating air horn | `honk --style truck` |
+| `clown` | A short, high, wobbly squeak | `honk --style clown` |
+
+Every honk is synthesised on the fly: no audio files, nothing to download.
+
+## Notifier mode
+
+honk knows how your command went. Success gets a happy honk that bends up at the end; failure
+gets a sad, longer honk that sags down.
+
+```bash
+# Honk when it's done, whatever happened
+cargo build && honk
+
+# Happy or sad, depending on the exit status
+make test; honk --status $?
+
+# Run the command for you, honk by outcome, and pass its exit code through,
+# so && chains and CI keep working
+honk -- cargo test
+
+# Make a deploy impossible to miss
+honk --times 5 --style truck -- ./deploy.sh
+```
+
+With `honk -- cmd`, the command's output is untouched and honk exits with the command's own code
+(127 if it could not be started).
+
+## Shape it
+
+| Flag | What it does |
+| --- | --- |
+| `--times N` | Number of honks, 1 to 10 (default 2) |
+| `--long` | Longer honks |
+| `--pitch X` | Pitch multiplier, 0.5 to 2.0 |
+| `--volume X` | Volume, 0.0 to 1.0 (default 0.8) |
+| `--wav FILE` | Write the honk to a WAV file instead of playing it |
+| `-q`, `--quiet` | No ASCII car |
+
+The car only appears when stderr is a terminal, so pipes and logs stay clean, and the honk
+itself never writes to stdout.
+
+## Make it yours
+
+Put your favourite honk in `config.yaml` and plain `honk` uses it. Flags still win.
+
+```yaml
+style: awooga
+volume: 0.5
+times: 3
+```
+
+| Platform | Location |
+| --- | --- |
+| Linux | `~/.config/honk/config.yaml` |
+| macOS | `~/Library/Application Support/honk/config.yaml` |
+| Windows | `%APPDATA%\honk\config.yaml` |
+
+Set `HONK_CONFIG_DIR` to use a different directory.
+
+## Works everywhere
+
+- **Linux** through ALSA, which also covers PulseAudio and PipeWire.
+- **macOS** through CoreAudio.
+- **Windows** through WASAPI.
+
+No speaker? No problem: on a headless server, in CI or over SSH, honk prints one warning and
+exits 0 (or with the wrapped command's code), so it never breaks a build. Set `HONK_NO_AUDIO=1`
+to silence it on purpose.
 
 ## Install
 
 | Method | Command |
 | --- | --- |
 | Homebrew (macOS, Linux) | `brew install mklab-se/tap/honk` |
-| Cargo | `cargo install honk` |
+| Cargo | `cargo install honk` (on Linux, install `libasound2-dev` first) |
 | cargo-binstall (prebuilt, no compiling) | `cargo binstall honk` |
 | Prebuilt binaries | Linux, macOS (Intel and Apple Silicon) and Windows on the [Releases page](https://github.com/mklab-se/honk/releases/latest) |
 
 Every release ships a CycloneDX SBOM per platform. Shell completions, building from source and
 more are in [INSTALL.md](INSTALL.md).
-
-## Coming in 0.2: the real honk
-
-0.1 proves the pipeline end to end on Linux, macOS and Windows. 0.2 makes the noise:
-
-- **Real sound, synthesised on the fly.** No audio files; works on Linux, macOS and Windows.
-- **Five horns:** `bulb`, `awooga`, `car`, `truck` and `clown`.
-- **Notifier mode:** `honk --status $?` and `honk -- cargo build` give a happy honk on success
-  and a sad, down-bending honk on failure, and pass the exit code straight through.
-- **Shape it:** `--times`, `--long`, `--pitch`, `--volume`, or `--wav out.wav` to keep the honk.
-- **An ASCII car** that honks along in your terminal.
 
 ## Part of the MKLab toolbox
 

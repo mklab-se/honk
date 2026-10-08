@@ -90,3 +90,11 @@ honk completion zsh > ~/.zfunc/_honk
 # Or dynamic completions (re-evaluated on each tab)
 source <(COMPLETE=zsh honk)
 ```
+
+## Environment variables
+
+| Variable | Effect |
+| --- | --- |
+| `HONK_NO_AUDIO` | Any value: never open an audio device (honk warns and exits 0). Handy in CI. |
+| `HONK_CONFIG_DIR` | Directory holding `config.yaml`, instead of the platform config directory. |
+| `HONK_NO_UPDATE_CHECK` | Any value: skip the background check for a newer release. |

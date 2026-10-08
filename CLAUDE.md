@@ -37,16 +37,38 @@ back to the GitHub URL if the sibling directory isn't present.
 A two-crate Cargo workspace:
 
 - `crates/honk/`: the CLI binary.
-  - `main.rs`: `#[tokio::main]`; sets up logging, dynamic-completion env, the `--no-color` override,
-    and spawns the background update check, then calls `Cli::run`.
-  - `cli.rs`: clap-derive `Cli`, `Commands`, `AiCommands`, `Shell`; `Cli::run` dispatches. The
-    no-subcommand (`None`) arm is the honk itself. `--help`/`-h` still work via clap.
-  - `commands/`: one module per command (`ai`, `completion`). Add new commands here.
-  - `banner.rs`: ASCII block-letter banner + version line.
-  - `update.rs`: polls crates.io, caches the result for 24h, notifies on a newer version.
-- `crates/honk-core/`: framework-agnostic library (no clap/tokio).
-  - `config.rs`: YAML `Config` in `~/.config/honk/`, a reusable starting point (unused so far).
+  - `main.rs`: `#[tokio::main]`; logging, dynamic completions, `--no-color`, a background update
+    check (abandoned after 300 ms so it never delays exit), then `Cli::run`, whose `i32` becomes
+    the process exit code.
+  - `cli.rs`: clap-derive `Cli` with flattened `HonkArgs` (the honk flags on the root command),
+    `Commands`, `AiCommands`, `Shell`. The no-subcommand arm is the honk itself;
+    `args_conflicts_with_subcommands` keeps `honk --times 3 version` from being ambiguous.
+  - `commands/honk.rs`: load config (warn and default on errors), resolve the spec, render, then
+    play (with the car unless `-q`) or write `--wav`.
+  - `commands/run.rs`: `honk -- cmd`; spawns without a shell, inherits stdio, maps the exit
+    status (signals to 128 + n, spawn failure to 127), honks happy or sad.
+  - `commands/ai.rs`, `commands/completion.rs`: template plumbing.
+  - `audio.rs`: rodio playback on the default device; no device (or `HONK_NO_AUDIO`) is
+    `Playback::NoDevice`, never an error.
+  - `car.rs`: ASCII car frames (pure, tested) and the stderr animation, only on a TTY.
+  - `banner.rs`, `update.rs`: from the template.
+- `crates/honk-core/`: pure and deterministic, no clap, tokio or audio device code.
+  - `style.rs`: `Style` (bulb, awooga, car, truck, clown) and its `Voice` synthesis preset.
+  - `spec.rs`: `HonkSpec`, `Mood`, `Overrides`; `HonkSpec::resolve` applies defaults, then
+    config (invalid values skipped with warnings), then flags (invalid values are errors).
+  - `synth.rs`: `render(&HonkSpec) -> Vec<f32>` at 44.1 kHz mono, `duration_secs`.
+  - `wav.rs`: 16-bit mono WAV via `hound`.
+  - `config.rs`: YAML `Config` (`style`, `volume`, `times`); `HONK_CONFIG_DIR` overrides the dir.
   - `error.rs`: `thiserror` `Error` enum + `Result` alias.
+
+## Testing
+
+- Core logic is unit-tested inline (`cargo test -p honk-core`): lengths, peaks within volume,
+  burst counts, mood pitch bends via zero-crossing counts, config precedence.
+- `crates/honk/tests/cli.rs` drives the binary with `HONK_NO_AUDIO=1` and
+  `HONK_NO_UPDATE_CHECK=1`, and asserts on `--wav` output, so no speaker or network is needed.
+  Wrapped-command tests use `sh -c` on Unix and `cmd /C` on Windows.
+- When tuning a style, change only its `Voice` numbers in `style.rs`; the core tests must stay green.
 
 ## Adding a command
 
