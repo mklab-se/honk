@@ -4,9 +4,11 @@ Guidance for Claude Code (and other agents) working in this repository.
 
 ## What this is
 
-`rusty-tmpl` is a **template repository** for MKLab Rust CLI tools. New tools are created from it via
-GitHub's "Use this template", then renamed (see the "Using this template" section of `README.md`).
-Keep it generic: it should compile, run, and pass CI as-is, while carrying no tool-specific logic.
+`honk` makes the computer honk like an old-school car: "Honk, honk!". It is a toy at heart, but
+built to be useful as a notifier in scripts and terminals (`cargo build && honk`,
+`honk -- long-job`). It must work on Linux, macOS and Windows.
+
+Design docs live in `docs/superpowers/`: the spec in `specs/`, implementation plans in `plans/`.
 
 ## Template lineage
 
@@ -34,17 +36,16 @@ back to the GitHub URL if the sibling directory isn't present.
 
 A two-crate Cargo workspace:
 
-- `crates/rusty-tmpl/`: the CLI binary.
+- `crates/honk/`: the CLI binary.
   - `main.rs`: `#[tokio::main]`; sets up logging, dynamic-completion env, the `--no-color` override,
     and spawns the background update check, then calls `Cli::run`.
-  - `cli.rs`: clap-derive `Cli`, `Commands`, `AiCommands`, `Shell`; `Cli::run` dispatches. **The
-    no-subcommand (`None`) arm intentionally prints `Hello world!`** instead of help (per the template
-    brief). `--help`/`-h` still work via clap.
+  - `cli.rs`: clap-derive `Cli`, `Commands`, `AiCommands`, `Shell`; `Cli::run` dispatches. The
+    no-subcommand (`None`) arm is the honk itself. `--help`/`-h` still work via clap.
   - `commands/`: one module per command (`ai`, `completion`). Add new commands here.
   - `banner.rs`: ASCII block-letter banner + version line.
   - `update.rs`: polls crates.io, caches the result for 24h, notifies on a newer version.
-- `crates/rusty-tmpl-core/`: framework-agnostic library (no clap/tokio).
-  - `config.rs`: YAML `Config` in `~/.config/rusty-tmpl/`, a reusable starting point (unused so far).
+- `crates/honk-core/`: framework-agnostic library (no clap/tokio).
+  - `config.rs`: YAML `Config` in `~/.config/honk/`, a reusable starting point (unused so far).
   - `error.rs`: `thiserror` `Error` enum + `Result` alias.
 
 ## Adding a command
@@ -98,4 +99,4 @@ a forced breaking upgrade makes it urgent. When a newer major is available and t
 documented reason not to take it (see any `# Stays on ...` comments in `Cargo.toml` for the current
 exceptions and why), take it during the next maintenance round rather than deferring it. This
 applies to every tool scaffolded from this template too; the cross-repo `maintaining-rust-tools`
-skill drives it for the whole fleet (ailloy + cosq + deemer + mdeck + pidge + rigg + rusty-tmpl).
+skill drives it for the whole fleet (ailloy + cosq + deemer + honk + mdeck + pidge + rigg + rusty-tmpl).

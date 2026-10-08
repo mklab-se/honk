@@ -1,22 +1,22 @@
 [package]
-name = "rusty-tmpl"
+name = "honk"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
 repository.workspace = true
 rust-version.workspace = true
-description = "A template for building Rust command-line tools"
+description = "Make your computer honk like an old-school car. Honk, honk!"
 readme = "../../README.md"
-keywords = ["cli", "template", "starter", "scaffold"]
-categories = ["command-line-utilities"]
+keywords = ["cli", "honk", "sound", "notification", "fun"]
+categories = ["command-line-utilities", "multimedia::audio"]
 
 [[bin]]
-name = "rusty-tmpl"
+name = "honk"
 path = "src/main.rs"
 
 [dependencies]
-rusty-tmpl-core.workspace = true
+honk-core.workspace = true
 ailloy.workspace = true
 clap.workspace = true
 clap_complete.workspace = true
@@ -33,8 +33,8 @@ chrono.workspace = true
 dirs.workspace = true
 
 [package.metadata.binstall]
-pkg-url = "{ repo }/releases/download/v{ version }/rusty-tmpl-v{ version }-{ target }.{ archive-format }"
-bin-dir = "rusty-tmpl{ binary-ext }"
+pkg-url = "{ repo }/releases/download/v{ version }/honk-v{ version }-{ target }.{ archive-format }"
+bin-dir = "honk{ binary-ext }"
 pkg-fmt = "tgz"
 
 [package.metadata.binstall.overrides.x86_64-pc-windows-msvc]

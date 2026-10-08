@@ -1,4 +1,4 @@
-//! rusty-tmpl: a template for building Rust command-line tools.
+//! honk: make your computer honk like an old-school car.
 
 use anyhow::Result;
 use clap::{CommandFactory, Parser};
@@ -13,7 +13,7 @@ use cli::Cli;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Handle dynamic shell completions (when invoked via COMPLETE=<shell> rusty-tmpl)
+    // Handle dynamic shell completions (when invoked via COMPLETE=<shell> honk)
     clap_complete::CompleteEnv::with_factory(Cli::command).complete();
 
     let cli = Cli::parse();
@@ -21,13 +21,13 @@ async fn main() -> Result<()> {
     // Initialize logging based on -v / -q.
     let filter = if cli.verbose > 0 {
         match cli.verbose {
-            1 => "rusty_tmpl=debug",
-            _ => "rusty_tmpl=trace",
+            1 => "honk=debug",
+            _ => "honk=trace",
         }
     } else if cli.quiet {
         "error"
     } else {
-        "rusty_tmpl=info"
+        "honk=info"
     };
 
     tracing_subscriber::registry()
@@ -40,7 +40,7 @@ async fn main() -> Result<()> {
     }
 
     // Spawn a background update check (skipped in quiet mode or if disabled via env).
-    let update_handle = if !cli.quiet && std::env::var("RUSTY_TMPL_NO_UPDATE_CHECK").is_err() {
+    let update_handle = if !cli.quiet && std::env::var("HONK_NO_UPDATE_CHECK").is_err() {
         Some(tokio::spawn(update::check_for_updates()))
     } else {
         None

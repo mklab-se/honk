@@ -1,27 +1,27 @@
-# Installing rusty-tmpl
+# Installing honk
 
-> `rusty-tmpl` is a template; these instructions become real once you publish your renamed tool.
+> `honk` is a template; these instructions become real once you publish your renamed tool.
 > Until then they document the install paths the release pipeline sets up.
 
 ## Homebrew (macOS / Linux)
 
 ```sh
-brew install mklab-se/tap/rusty-tmpl
+brew install mklab-se/tap/honk
 ```
 
 Or add the tap once, then install:
 
 ```sh
 brew tap mklab-se/tap
-brew install rusty-tmpl
+brew install honk
 ```
 
-Upgrade with `brew upgrade rusty-tmpl`.
+Upgrade with `brew upgrade honk`.
 
 ## Cargo (from crates.io)
 
 ```sh
-cargo install rusty-tmpl
+cargo install honk
 ```
 
 On Windows, building from source needs [NASM](https://www.nasm.us/) and [CMake](https://cmake.org/)
@@ -33,21 +33,21 @@ both fetch a pre-built binary.
 ## cargo-binstall (prebuilt binaries, no compilation)
 
 ```sh
-cargo binstall rusty-tmpl
+cargo binstall honk
 ```
 
 ## Prebuilt binaries (GitHub Releases)
 
 Download the archive for your platform from the
-[latest release](https://github.com/mklab-se/rusty-tmpl/releases/latest), extract it, and put the
-`rusty-tmpl` binary somewhere on your `PATH`:
+[latest release](https://github.com/mklab-se/honk/releases/latest), extract it, and put the
+`honk` binary somewhere on your `PATH`:
 
 | Platform | Archive |
 | --- | --- |
-| Linux (x86-64) | `rusty-tmpl-vX.Y.Z-x86_64-unknown-linux-gnu.tar.gz` |
-| macOS (Apple Silicon) | `rusty-tmpl-vX.Y.Z-aarch64-apple-darwin.tar.gz` |
-| macOS (Intel) | `rusty-tmpl-vX.Y.Z-x86_64-apple-darwin.tar.gz` |
-| Windows (x86-64) | `rusty-tmpl-vX.Y.Z-x86_64-pc-windows-msvc.zip` |
+| Linux (x86-64) | `honk-vX.Y.Z-x86_64-unknown-linux-gnu.tar.gz` |
+| macOS (Apple Silicon) | `honk-vX.Y.Z-aarch64-apple-darwin.tar.gz` |
+| macOS (Intel) | `honk-vX.Y.Z-x86_64-apple-darwin.tar.gz` |
+| Windows (x86-64) | `honk-vX.Y.Z-x86_64-pc-windows-msvc.zip` |
 
 ## Software bill of materials (SBOM)
 
@@ -55,7 +55,7 @@ Every release asset above has a matching CycloneDX 1.5 SBOM listing the exact cr
 compiled into that platform's binary:
 
 ```
-rusty-tmpl-vX.Y.Z-<target>.cdx.json
+honk-vX.Y.Z-<target>.cdx.json
 ```
 
 The binaries are also built with [`cargo auditable`](https://github.com/rust-secure-code/cargo-auditable),
@@ -64,7 +64,7 @@ RustSec advisory database with:
 
 ```sh
 cargo install cargo-audit --features=fix
-cargo audit bin ./rusty-tmpl
+cargo audit bin ./honk
 ```
 
 `syft` and `trivy` also understand this format.
@@ -72,17 +72,17 @@ cargo audit bin ./rusty-tmpl
 ## From source
 
 ```sh
-git clone https://github.com/mklab-se/rusty-tmpl
-cd rusty-tmpl
-cargo install --path crates/rusty-tmpl
+git clone https://github.com/mklab-se/honk
+cd honk
+cargo install --path crates/honk
 ```
 
 ## Shell completions
 
 ```sh
 # Static script (write it where your shell loads completions)
-rusty-tmpl completion zsh > ~/.zfunc/_rusty-tmpl
+honk completion zsh > ~/.zfunc/_honk
 
 # Or dynamic completions (re-evaluated on each tab)
-source <(COMPLETE=zsh rusty-tmpl)
+source <(COMPLETE=zsh honk)
 ```

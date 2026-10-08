@@ -3,14 +3,13 @@
 use anyhow::Result;
 use clap::Parser;
 
-/// A template for building Rust command-line tools.
+/// Make your computer honk like an old-school car. Honk, honk!
 #[derive(Parser)]
-#[command(name = "rusty-tmpl")]
+#[command(name = "honk")]
 #[command(author, version, about)]
-#[command(long_about = "A template for building Rust command-line tools.\n\n\
-    Run without a subcommand to print \"Hello world!\". The reusable plumbing \
-    (AI integration, shell completions, and versioning) is wired up so you can \
-    focus on your tool's own commands.")]
+#[command(long_about = "Make your computer honk like an old-school car.\n\n\
+    Run without a subcommand to honk. Drop it at the end of a long command \
+    (`cargo build && honk`) and your computer tells you when it is done.")]
 #[command(propagate_version = true)]
 pub struct Cli {
     /// Increase output verbosity (-v for debug, -vv for trace)
@@ -55,17 +54,17 @@ pub enum AiCommands {
         /// Message to send (default: "Say hello in one sentence.")
         message: Option<String>,
     },
-    /// Enable AI features for rusty-tmpl
+    /// Enable AI features for honk
     Enable,
-    /// Disable AI features for rusty-tmpl
+    /// Disable AI features for honk
     Disable,
     /// Interactively configure AI provider and model settings
     Config,
-    /// Show AI status (same as running `rusty-tmpl ai` without a subcommand)
+    /// Show AI status (same as running `honk ai` without a subcommand)
     Status,
 }
 
-/// Shells supported by `rusty-tmpl completion`.
+/// Shells supported by `honk completion`.
 #[derive(Clone, Copy, clap::ValueEnum)]
 pub enum Shell {
     Bash,

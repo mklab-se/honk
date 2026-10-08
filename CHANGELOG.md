@@ -36,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Supply-chain transparency for release builds: `release.yml` builds binaries with `cargo auditable`
   (dependency list embedded in the executable, readable with `cargo audit bin` or `syft`) and
-  attaches a per-target CycloneDX 1.5 SBOM (`rusty-tmpl-vX.Y.Z-<target>.cdx.json`) to every
+  attaches a per-target CycloneDX 1.5 SBOM (`honk-vX.Y.Z-<target>.cdx.json`) to every
   GitHub Release. `INSTALL.md` documents how to read them.
 - `/release` skill: updates the toolchain (`rustup update stable`) before the pre-flight checks,
   lints with `--all-targets` like CI, re-runs clippy after formatting, and ends with a
@@ -58,11 +58,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   majors in `ci.yml`/`release.yml` are still current. `serde_yaml` pin reason recorded in `Cargo.toml`.
 - GitHub Actions bumped to Node 24 majors: `actions/checkout@v7`, `actions/upload-artifact@v7`,
   `actions/download-artifact@v8`, `softprops/action-gh-release@v3`.
-- Initial template: Cargo workspace (`rusty-tmpl` + `rusty-tmpl-core`), clap-derive CLI with
+- Initial template: Cargo workspace (`honk` + `honk-core`), clap-derive CLI with
   `-v`/`-q`/`--no-color` global flags, `Hello world!` default command, `ai` subcommand backed by
   Ailloy, shell completions, version banner, and a background crates.io update checker.
 - GitHub Actions CI (check / test / clippy / fmt) and a release pipeline that builds cross-platform
   binaries, publishes to crates.io, and updates the Homebrew tap.
 - `/release` skill for cutting versioned releases.
 
-[Unreleased]: https://github.com/mklab-se/rusty-tmpl/commits/main
+[Unreleased]: https://github.com/mklab-se/honk/commits/main
