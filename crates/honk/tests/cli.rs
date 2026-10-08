@@ -215,3 +215,16 @@ fn no_car_art_when_stderr_is_not_a_terminal() {
         .stderr(predicate::str::contains("HONK!").not())
         .stderr(predicate::str::contains("(_)").not());
 }
+
+#[test]
+fn wrapped_exit_code_survives_a_failed_wav_write() {
+    let dir = tempfile::tempdir().unwrap();
+    honk()
+        .arg("--wav")
+        .arg(dir.path().join("missing/h.wav"))
+        .arg("--")
+        .args(exits_with(3))
+        .assert()
+        .code(3)
+        .stderr(predicate::str::contains("h.wav"));
+}

@@ -36,7 +36,10 @@ pub fn run(args: &HonkArgs, quiet: bool) -> Result<i32> {
             127
         }
     };
-    crate::commands::honk::honk(args, Mood::from_exit_code(code), quiet)?;
+    // The command's exit code is what callers depend on; a failed honk must not replace it.
+    if let Err(e) = crate::commands::honk::honk(args, Mood::from_exit_code(code), quiet) {
+        eprintln!("{} {e:#}", "error:".red().bold());
+    }
     Ok(code)
 }
 
