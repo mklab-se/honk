@@ -1,7 +1,7 @@
 # Honk: design
 
 Date: 2026-10-08
-Status: draft, awaiting review
+Status: approved 2026-10-08
 
 ## Purpose
 
@@ -45,6 +45,32 @@ Done when: `brew install mklab-se/tap/honk && honk` prints `Honk, honk!`, and
 
 Everything in the sections below. Adds the ALSA install step to CI and to the Linux build in
 `release.yml`. Released as `v0.2.0`.
+
+## README and artwork (both stages)
+
+The README must sell the tool to anyone landing on the repo: a polished, playful page, not a
+template leftover.
+
+- Layout follows the fleet: centred logo `media/honk-horizontal.png` (width 600), the standard
+  badge block (CI, crates.io, GitHub Release, Homebrew dynamic badge, licence), a centred
+  "What's new" callout, then a punchy one-line pitch and a quick start.
+- Artwork is generated with ailloy (`ailloy image`) in the same style as the other tools'
+  `media/` images (rigg, cosq, pidge, ailloy): a monochrome graphite and ink sketch with
+  detailed cross-hatching on a white background, 1536x1024 landscape, a whimsical visual metaphor
+  with a capped developer character, small terminal or code details drawn into the scene, no
+  colour and no rendered title text. Honk's metaphor: a vintage open-top car (Model T era) with a
+  big brass bulb horn, the developer squeezing the horn next to a laptop showing `honk`, sound
+  lines bursting out.
+- Files: `media/honk-horizontal.png` (hero, 1536x1024) and `media/honk-vertical.png`
+  (1024x1536, same scene composed vertically), replacing the template's placeholder. Several
+  candidates are generated and the best one chosen by inspection; the prompt used is recorded in
+  `media/README.md` so the art can be regenerated consistently.
+- Stage 1 README: hero, badges, pitch, install (Homebrew, cargo, binaries), the hello-world quick
+  start, and a short "Coming in v0.2" teaser listing the agreed features. No feature is described
+  as working before it ships.
+- Stage 2 README: full feature tour (styles table, notifier recipes such as
+  `cargo build && honk` and `honk -- make test`, shape knobs, config), the "What's new" callout
+  updated for 0.2.
 
 ## Command surface (stage 2)
 
