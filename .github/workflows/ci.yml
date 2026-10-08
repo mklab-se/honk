@@ -29,14 +29,23 @@ jobs:
       - run: cargo check --workspace
 
   test:
-    name: Test
-    runs-on: ubuntu-latest
+    name: Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
       - uses: Swatinem/rust-cache@v2
+      # aws-lc-sys (reqwest's TLS crypto provider) needs NASM to assemble its
+      # optimized routines on Windows; CMake and MSVC are already on the image.
+      - name: Install NASM (Windows)
+        if: runner.os == 'Windows'
+        uses: ilammy/setup-nasm@v1
       - run: cargo test --workspace
 
   clippy:

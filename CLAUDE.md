@@ -72,7 +72,8 @@ shared global config (`~/.config/ailloy/config.yaml`). To call a model from a co
   The release workflow's Windows leg installs NASM via `ilammy/setup-nasm@v1`; CMake and MSVC are
   already on the `windows-latest` image.
 - CI gates: `cargo fmt --all -- --check`, `cargo clippy --workspace --all-targets -- -D warnings`,
-  `cargo test --workspace`. CI runs the latest stable toolchain, so run the gates on an up-to-date
+  `cargo test --workspace`. The test job runs on Ubuntu, macOS and Windows: cross-platform is a hard
+  requirement. CI runs the latest stable toolchain, so run the gates on an up-to-date
   local toolchain (new clippy lints otherwise surface only in CI).
 - `README.md` opens with the logo, the badges and then a centred "What's new" callout
   (`<strong>tool X.Y</strong> is here: ...` plus a `What's new` link to `CHANGELOG.md`). Refresh the
