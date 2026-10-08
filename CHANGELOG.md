@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- On macOS, `config.yaml` now lives in `~/.config/honk/` (or `$XDG_CONFIG_HOME/honk/`), like on
+  Linux and like Ailloy, instead of `~/Library/Application Support/honk/`. If you made a config
+  there, move it: `mv ~/Library/Application\ Support/honk ~/.config/honk`. Windows is unchanged.
+
 ## [0.3.0] - 2026-10-08
 
 ### Added

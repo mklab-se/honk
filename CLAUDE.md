@@ -63,7 +63,10 @@ A two-crate Cargo workspace:
     config (invalid values skipped with warnings), then flags (invalid values are errors).
   - `synth.rs`: `render(&HonkSpec) -> Vec<f32>` at 44.1 kHz mono, `duration_secs`.
   - `wav.rs`: 16-bit mono WAV via `hound`.
-  - `config.rs`: YAML `Config` (`style`, `volume`, `times`); `HONK_CONFIG_DIR` overrides the dir.
+  - `config.rs`: YAML `Config` (`style`, `volume`, `times`). Location: `HONK_CONFIG_DIR`, else
+    `$XDG_CONFIG_HOME/honk` or `~/.config/honk` on Linux and macOS (Ailloy's rule, deliberately
+    not `dirs::config_dir()`, which is `~/Library/Application Support` on macOS), else
+    `%APPDATA%\honk` on Windows.
   - `error.rs`: `thiserror` `Error` enum + `Result` alias.
 
 ## Testing

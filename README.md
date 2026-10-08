@@ -132,8 +132,7 @@ times: 3
 
 | Platform | Location |
 | --- | --- |
-| Linux | `~/.config/honk/config.yaml` |
-| macOS | `~/Library/Application Support/honk/config.yaml` |
+| Linux and macOS | `~/.config/honk/config.yaml` (or `$XDG_CONFIG_HOME/honk/config.yaml`) |
 | Windows | `%APPDATA%\honk\config.yaml` |
 
 Set `HONK_CONFIG_DIR` to use a different directory.
