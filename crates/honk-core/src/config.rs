@@ -4,6 +4,7 @@
 //! `$XDG_CONFIG_HOME`), `%APPDATA%\honk\config.yaml` on Windows, holding the user's default honk:
 //! style, volume and number of honks. Command-line flags override it.
 
+#[cfg(not(windows))]
 use std::ffi::OsString;
 use std::path::PathBuf;
 
@@ -33,11 +34,10 @@ impl Config {
         if let Some(dir) = std::env::var_os("HONK_CONFIG_DIR") {
             return Ok(PathBuf::from(dir).join("config.yaml"));
         }
-        let dir = if cfg!(windows) {
-            dirs::config_dir().map(|d| d.join("honk"))
-        } else {
-            unix_config_dir(std::env::var_os("XDG_CONFIG_HOME"), dirs::home_dir())
-        };
+        #[cfg(windows)]
+        let dir = dirs::config_dir().map(|d| d.join("honk"));
+        #[cfg(not(windows))]
+        let dir = unix_config_dir(std::env::var_os("XDG_CONFIG_HOME"), dirs::home_dir());
         Ok(dir.ok_or(Error::NoConfigDir)?.join("config.yaml"))
     }
 
@@ -65,6 +65,7 @@ impl Config {
 
 /// `$XDG_CONFIG_HOME/honk` when it is set to an absolute path, else
 /// `~/.config/honk`. Used on Linux and macOS.
+#[cfg(not(windows))]
 fn unix_config_dir(xdg: Option<OsString>, home: Option<PathBuf>) -> Option<PathBuf> {
     match xdg.map(PathBuf::from) {
         Some(xdg) if xdg.is_absolute() => Some(xdg.join("honk")),
@@ -77,18 +78,21 @@ mod tests {
     use super::*;
     use crate::style::Style;
 
+    #[cfg(not(windows))]
     #[test]
     fn xdg_config_home_wins() {
         let dir = unix_config_dir(Some("/xdg".into()), Some("/home/k".into()));
         assert_eq!(dir, Some(PathBuf::from("/xdg/honk")));
     }
 
+    #[cfg(not(windows))]
     #[test]
     fn otherwise_dot_config_in_home_like_ailloy() {
         let dir = unix_config_dir(None, Some("/Users/k".into()));
         assert_eq!(dir, Some(PathBuf::from("/Users/k/.config/honk")));
     }
 
+    #[cfg(not(windows))]
     #[test]
     fn empty_or_relative_xdg_is_ignored() {
         // The XDG spec says to ignore a relative or empty XDG_CONFIG_HOME.
@@ -98,6 +102,7 @@ mod tests {
         }
     }
 
+    #[cfg(not(windows))]
     #[test]
     fn no_home_and_no_xdg_is_none() {
         assert_eq!(unix_config_dir(None, None), None);
