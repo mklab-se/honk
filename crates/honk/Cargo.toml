@@ -25,6 +25,7 @@ tokio.workspace = true
 anyhow.workspace = true
 colored.workspace = true
 ctrlc.workspace = true
+terminal_size.workspace = true
 tracing.workspace = true
 tracing-subscriber.workspace = true
 reqwest.workspace = true

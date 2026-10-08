@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- A detailed car: in terminals of at least 80x18, honk draws a 1920s roadster in Braille dots
+  (60x16) with the honk bursting out of its bell horn. Smaller terminals keep the small ASCII car.
+
 ### Removed
 
 - The `honk ai` command and the Ailloy dependency, inherited from the MKLab tool template but

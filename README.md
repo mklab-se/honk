@@ -35,10 +35,22 @@ cargo build && honk       # tell me when it's done
 ```
 
 ```text
-     ______
-  __/  |   \___  o< ) )   HONK!
- |_  _ |  _  __|
-   (_)    (_)
+                       ⣼⠉⠉⠉⠙⠛⠛⠒⠒⠒⠒⢲⡄
+                       ⣸⣆⣀⣀⣀⣀⣀⡀ ⠐  ⣧⣠⡀
+     ⣴⣶⣲⣶⣒⡒⠒⠒⣒⣒⠒⣒⣒⠶⣦⣄⣀⡀⠸⣇   ⠉⡩⠉⠉⠉⠉⠉⣿⣿⠧⣶⢦ ) )   HONK!
+     ⢨⣿⠮⣽⣿⣿⣿⣍⣍⠩⠙⡉⠻⡙⡍⠉⠉⠩⠹⣿⣶⠶⠶⠛⠒⠚⣶⡶⣶⣶⣯⣿⣟⣳⣊⣀⣀⣀⣀ ⢠⣤⡀
+      ⠈⢙⣛⡿⠿⠿⠿⢿⠲⣦⣠⣀⣹⣘⣌⣀⣆⡷⣧⡇   ⡴⠋           ⠉⡩⠛⡩⠚⣗⠢⡄
+   ⢀⢠⠖⠋⠉⠁     ⢀⣤⡀     ⠐⡇ ⠈⠉⠁⢸⠓⠒⠒⠒⠒⠒⠒⠒⠒ ⠠⠤⠤⢴⠃⢸⣷⣶⣿⣿⣿ ⣀⣀
+   ⢻⣧⣒⣀⣀⠒⠦⡀    ⢫       ⡇    ⢸ ⠠    ⠄⣀⣀⣀⣀⣀ ⢸⢶⣿⠿⣿⣿⣿⣿⣾⣿⠋⣷⠐ ⠤⣀
+ ⢿⣶⣿⣿⡿⠿⣿⣷⡀⠈⢦   ⢸       ⡇    ⢸ ⢐ ⢀⣤⢞⣫⣥⣤⣶⣦⢄⡉⠚⠿⣿⢀⣼⣿⣿⣿⣻⣿⡤⠇⣠⣤⣤⣄⠑⡄
+ ⢰⣿⡟⣡⣶⣶⣦⡙⣷⡀⠈⢧⡀  ⠣⢄⣀⣀⣀⣀⣠⠇    ⣸⣀⡀⣠⣿⣿⣿⠿⠛⠛⠛⠿⣿⣮⣗⣂⣸⣿⣿⣿⣿⣿⡝⠻ ⣸⣿⣿⡟⢷⣄
+⣿⣿⣿⢰⣿⣿⣿⣿⣷⡸⡇ ⢸⡉⠉⠉⠉ ⠒⠒⠒⠒⠒⠒⠒⠦⠤⠤⠿⢤⣼⣿⣿⡟⣡⣶⣿⣿⣿⣶⣌⢻⣿⣿⣿⣿⣿⣿⣿⣿⣁⡀⢀⣇⣇⡼⠙⣆⢻⡆
+⠉⠉⢉⢸⣿⣿⣮⢹⣿⡇⣷⣀⣛⣇⣀⣀⣀⡀     ⣤    ⣠⣾⣿⣿⡟⣰⣿⣿⣿⣿⣿⣿⣿⣆⢹⣿⣿⡿⣟⢻⡟⣹⣧⢏⣙⠻⣏⣷⣋⣹⠈⣿
+  ⠸⢸⣯⣹⣭⣾⣿⡇⣿⡟⠿⠿⠿⠿⠿⠿⢿⣿⣿⣿⣶⣿⣶⣶⣦⣾⣿⣿⣿⣿⡇⣟⣿⣿⣿⣭⠻⣿⣿⣿⡄⣿⣿⣷⣦⣩⣿⡿⣿⣛⣻⣿⣿⡿⢥⣸ ⣿
+   ⢃⢻⣧⣏⣹⡜⣸⡿       ⠈⠻⠿⣿⡿⠟⠉⠉⠁  ⠉⠉⠙⡇⢿⡏⢛⣷⡾⢋⣿⣿⣿⡇⣿⣿⡿⠿⠿⠿⢻⣿⣯⣨⠏⡏⠹⣤⠟⣸⡏
+    ⠑⢬⣉⣩⡼⠟⠁                     ⢱⠸⣿⡏⢸⠛⡿⢿⡋⣹⢀⣿⠇     ⠙⢿⣿⡷⠿⠞⣋⡼⠏
+                                 ⠳⡘⢿⣿⣄⣧⣤⠿⢁⣾⠟        ⠉⠙⠛⠋⠉
+                                  ⠈⠲⢬⣉⣉⣡⡴⠟⠁
 ```
 
 ## Five horns
@@ -85,7 +97,7 @@ With `honk -- cmd`, the command's output is untouched and honk exits with the co
 | `--pitch X` | Pitch multiplier, 0.5 to 2.0 |
 | `--volume X` | Volume, 0.0 to 1.0 (default 0.8) |
 | `--wav FILE` | Write the honk to a WAV file instead of playing it |
-| `-q`, `--quiet` | No ASCII car |
+| `-q`, `--quiet` | No car |
 
 The car only appears when stderr is a terminal, so pipes and logs stay clean, and the honk
 itself never writes to stdout.

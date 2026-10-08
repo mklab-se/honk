@@ -51,7 +51,11 @@ A two-crate Cargo workspace:
   - `audio.rs`: playback with a 100 ms silent tail; rodio on macOS/Windows, `player.rs` on
     Linux. No device (or `HONK_NO_AUDIO`) is `Playback::NoDevice`, never an error.
   - `player.rs`: Linux only; pipes a WAV into the first working system player.
-  - `car.rs`: ASCII car frames (pure, tested) and the stderr animation, only on a TTY.
+  - `car.rs`: car frames (pure, tested) and the stderr animation, only on a TTY. `Art::Braille`
+    (`assets/car-braille.txt`, 60x16) in terminals of at least 80x18, else `Art::Small` (ASCII).
+    Regenerate the Braille art with `scripts/car_to_braille.py` from `media/car-lineart.png`
+    (an ailloy line drawing); never hand-edit it. Every row stays padded to full width so redraws
+    overwrite cleanly.
   - `banner.rs`, `update.rs`: from the template.
 - `crates/honk-core/`: pure and deterministic, no clap, tokio or audio device code.
   - `style.rs`: `Style` (bulb, awooga, car, truck, clown) and its `Voice` synthesis preset.

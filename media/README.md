@@ -22,3 +22,13 @@ Reference image: `honk-horizontal.png`. Command:
 Prompt:
 
 > Same scene, same style and same character, recomposed as a tall portrait: the vintage car and the developer squeezing the big brass bulb horn in the lower half, the open laptop on the car seat showing "$ honk" and "Honk, honk!", the HONK HONK lettering, sound lines and startled birds rising into the upper half, old-town street with a church spire behind. Monochrome graphite and ink, detailed cross-hatching, pure white background fading out at the edges, no colour.
+
+## car-lineart.png (1536x1024)
+
+The source for the terminal's Braille car (`crates/honk/assets/car-braille.txt`, made by
+`scripts/car_to_braille.py`). A generic 1920s roadster, no brand. Command:
+`ailloy image "<prompt>" --size 1536x1024 --variants 2`
+
+Prompt:
+
+> Clean black line drawing on a pure white background, a vintage 1920s open-top roadster car seen from the side at a slight three-quarter angle, facing right, spoked wheels, running boards, folded soft top, a brass bulb horn mounted by the windscreen. Bold uniform outlines, minimal shading, no text, no logo, no background, no shadow, the car fills the frame.
