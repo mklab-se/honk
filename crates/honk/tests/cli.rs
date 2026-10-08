@@ -146,3 +146,63 @@ fn config_defaults_apply_and_broken_config_is_survivable() {
         .success()
         .stderr(predicate::str::contains("config"));
 }
+
+/// A shell command that exits with `code`, on every platform.
+fn exits_with(code: i32) -> Vec<String> {
+    if cfg!(windows) {
+        vec!["cmd".into(), "/C".into(), format!("exit {code}")]
+    } else {
+        vec!["sh".into(), "-c".into(), format!("exit {code}")]
+    }
+}
+
+#[test]
+fn wrapped_command_exit_code_passes_through() {
+    let dir = tempfile::tempdir().unwrap();
+    let out = dir.path().join("h.wav");
+    honk()
+        .arg("--wav")
+        .arg(&out)
+        .arg("--")
+        .args(exits_with(3))
+        .assert()
+        .code(3);
+    let sad = wav_len(&out);
+    honk()
+        .arg("--wav")
+        .arg(&out)
+        .arg("--")
+        .args(exits_with(0))
+        .assert()
+        .code(0);
+    assert!(
+        sad > wav_len(&out),
+        "failure should render the longer sad honk"
+    );
+}
+
+#[test]
+fn wrapped_command_output_is_not_captured() {
+    let echo = if cfg!(windows) {
+        vec!["cmd", "/C", "echo hello"]
+    } else {
+        vec!["sh", "-c", "echo hello"]
+    };
+    honk()
+        .arg("--")
+        .args(echo)
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("hello"));
+}
+
+#[test]
+fn missing_command_is_exit_127() {
+    honk()
+        .args(["--", "definitely-not-a-real-command-honk"])
+        .assert()
+        .code(127)
+        .stderr(predicate::str::contains(
+            "definitely-not-a-real-command-honk",
+        ));
+}

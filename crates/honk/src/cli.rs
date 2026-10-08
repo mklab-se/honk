@@ -153,7 +153,7 @@ impl Cli {
             None => {
                 let quiet = self.quiet;
                 if !self.honk.command.is_empty() {
-                    anyhow::bail!("running a command is not implemented yet");
+                    return crate::commands::run::run(&self.honk, quiet);
                 }
                 let mood = self
                     .honk
