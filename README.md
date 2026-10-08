@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <strong>honk 0.4</strong> is here: one config folder, <code>~/.config/honk</code>, on both macOS and Linux, like every MKLab tool.
+  <strong>honk 1.0</strong> is here: a Braille roadster sized to your terminal, five horns, and notifier mode, stable on Linux, macOS and Windows.
   <a href="CHANGELOG.md">What's new</a>
 </p>
 

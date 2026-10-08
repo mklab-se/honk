@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.0.0] - 2026-10-08
+
+honk 1.0: a synthesised car horn for your terminal, five horn styles, notifier mode that passes
+exit codes through, a Braille roadster sized to your terminal, and the same behaviour on Linux,
+macOS and Windows. From here on, the command-line interface and config file are stable.
 
 ### Changed
 
