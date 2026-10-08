@@ -228,3 +228,41 @@ fn wrapped_exit_code_survives_a_failed_wav_write() {
         .code(3)
         .stderr(predicate::str::contains("h.wav"));
 }
+
+/// Ctrl-C reaches the whole foreground process group. honk must outlive it and
+/// let the wrapped command decide, rather than dying and orphaning the child.
+#[cfg(unix)]
+#[test]
+fn sigint_to_honk_does_not_abandon_the_wrapped_command() {
+    let bin = assert_cmd::cargo::cargo_bin!("honk");
+    let mut child = std::process::Command::new(bin)
+        .env("HONK_NO_UPDATE_CHECK", "1")
+        .env("HONK_NO_AUDIO", "1")
+        .args(["-q", "--", "sleep", "1"])
+        .stderr(std::process::Stdio::null())
+        .spawn()
+        .unwrap();
+    // Signal only once honk has spawned the command, i.e. is waiting on it.
+    let pid = child.id().to_string();
+    let deadline = std::time::Instant::now() + std::time::Duration::from_secs(10);
+    while !std::process::Command::new("pgrep")
+        .args(["-P", &pid])
+        .stdout(std::process::Stdio::null())
+        .status()
+        .unwrap()
+        .success()
+    {
+        assert!(
+            std::time::Instant::now() < deadline,
+            "honk never spawned the command"
+        );
+        std::thread::sleep(std::time::Duration::from_millis(20));
+    }
+    let killed = std::process::Command::new("kill")
+        .args(["-INT", &pid])
+        .status()
+        .unwrap();
+    assert!(killed.success());
+    let status = child.wait().unwrap();
+    assert_eq!(status.code(), Some(0), "honk died early: {status:?}");
+}

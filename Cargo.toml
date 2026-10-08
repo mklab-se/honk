@@ -41,6 +41,9 @@ reqwest = { version = "0.13", default-features = false, features = ["json", "rus
 anyhow = "1.0"
 thiserror = "2.0"
 
+# Signals: lets `honk -- cmd` outlive Ctrl-C (Unix and the Windows console).
+ctrlc = "3.5"
+
 # Terminal
 colored = "3.1"
 

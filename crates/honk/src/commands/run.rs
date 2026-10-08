@@ -29,6 +29,11 @@ pub fn run(args: &HonkArgs, quiet: bool) -> Result<i32> {
         .command
         .split_first()
         .expect("clap guarantees a command");
+    // Ctrl-C goes to the whole foreground process group. Like `time` or a shell,
+    // stay alive and let the command decide how to stop; its exit status then
+    // picks the honk. A handler (not "ignore") keeps the child's default
+    // disposition, since exec resets handled signals.
+    let _ = ctrlc::set_handler(|| {});
     let code = match Command::new(program).args(rest).status() {
         Ok(status) => exit_code(status),
         Err(e) => {
