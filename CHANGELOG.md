@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- The Braille car now comes in five sizes (40 to 96 columns wide) and honk draws the largest one
+  that fits your terminal, so smaller windows get a Braille car too instead of jumping straight to
+  the small ASCII one. honk never draws a car taller than the window, which also fixes leftover
+  dots after a honk in a short terminal. `honk -v` shows the detected size and the chosen car.
+
 ## [0.4.0] - 2026-10-08
 
 ### Changed

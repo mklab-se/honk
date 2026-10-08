@@ -25,8 +25,8 @@ Prompt:
 
 ## car-lineart.png (1536x1024)
 
-The source for the terminal's Braille car (`crates/honk/assets/car-braille.txt`, made by
-`scripts/car_to_braille.py`). A generic 1920s roadster, no brand. Command:
+The source for the terminal's Braille cars (`crates/honk/assets/braille/`, made by
+`scripts/car_to_braille.py` at five sizes). A generic 1920s roadster, no brand. Command:
 `ailloy image "<prompt>" --size 1536x1024 --variants 2`
 
 Prompt:
