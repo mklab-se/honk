@@ -4,6 +4,7 @@ use anyhow::Result;
 use clap::{CommandFactory, Parser};
 use tracing_subscriber::{EnvFilter, fmt, prelude::*};
 
+mod audio;
 mod banner;
 mod cli;
 mod commands;

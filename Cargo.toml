@@ -60,6 +60,9 @@ ailloy = { version = "3.0", default-features = false, features = ["config-tui"] 
 
 # Audio
 hound = "3.5"
+# Playback only: no decoders, we synthesise everything. Needs ALSA headers
+# (libasound2-dev) to build on Linux.
+rodio = { version = "0.22", default-features = false, features = ["playback"] }
 
 # Testing
 assert_cmd = "2.2"

@@ -21,6 +21,9 @@ Upgrade with `brew upgrade honk`.
 cargo install honk
 ```
 
+On Linux this compiles against ALSA, so install `libasound2-dev` (Debian/Ubuntu) or
+`alsa-lib-devel` (Fedora) first.
+
 On Windows, building from source needs [NASM](https://www.nasm.us/) and [CMake](https://cmake.org/)
 on `PATH` (plus the Visual Studio Build Tools most Rust installs already have). They're needed to
 compile [`aws-lc-rs`](https://github.com/aws/aws-lc-rs), the TLS crypto backend. macOS and Linux need
@@ -67,6 +70,10 @@ cargo audit bin ./honk
 `syft` and `trivy` also understand this format.
 
 ## From source
+
+On Linux, install the ALSA development headers first (honk plays sound through ALSA, which also
+covers PulseAudio and PipeWire): `sudo apt-get install libasound2-dev` on Debian/Ubuntu, or
+`sudo dnf install alsa-lib-devel` on Fedora. macOS and Windows need nothing extra for audio.
 
 ```sh
 git clone https://github.com/mklab-se/honk

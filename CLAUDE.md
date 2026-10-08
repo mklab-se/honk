@@ -67,6 +67,8 @@ shared global config (`~/.config/ailloy/config.yaml`). To call a model from a co
   Current majors: clap 4.6, tokio 1.53, colored 3, dirs 7, thiserror 2, ailloy 3.0, reqwest 0.13.
   YAML is `serde_norway` 0.9, the maintained drop-in fork of the deprecated `serde_yaml`
   (chosen fleet-wide 2026-10-07).
+- Building on Linux needs the ALSA headers (`libasound2-dev`): `rodio` plays through `cpal`/ALSA.
+  Every Linux CI and release job that compiles installs them.
 - Building from source on Windows needs NASM and CMake on `PATH`, because `aws-lc-rs`
   (reqwest's TLS crypto backend) compiles optimized assembly routines at build time. macOS and Linux need nothing extra.
   The release workflow's Windows leg installs NASM via `ilammy/setup-nasm@v1`; CMake and MSVC are
