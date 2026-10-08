@@ -9,6 +9,11 @@ fn honk() -> Command {
     let mut cmd = assert_cmd::cargo::cargo_bin_cmd!("honk");
     cmd.env("HONK_NO_UPDATE_CHECK", "1");
     cmd.env("HONK_NO_AUDIO", "1");
+    // Never read the developer's own config.yaml; tests that need one override this.
+    cmd.env(
+        "HONK_CONFIG_DIR",
+        std::env::temp_dir().join("honk-tests-no-config-here"),
+    );
     cmd
 }
 

@@ -32,10 +32,9 @@ reqwest.workspace = true
 semver.workspace = true
 chrono.workspace = true
 dirs.workspace = true
-rodio.workspace = true
 
-[target.'cfg(target_os = "linux")'.dependencies]
-alsa.workspace = true
+[target.'cfg(not(target_os = "linux"))'.dependencies]
+rodio.workspace = true
 
 [dev-dependencies]
 assert_cmd.workspace = true

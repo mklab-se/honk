@@ -1,6 +1,8 @@
 //! Playing samples on the default output device.
-
-use std::num::NonZero;
+//!
+//! macOS and Windows play through `rodio` (CoreAudio, WASAPI). Linux pipes a WAV
+//! into the system's own player (see `player.rs`), so building and running honk
+//! there needs no audio library.
 
 use honk_core::synth::SAMPLE_RATE;
 
@@ -8,8 +10,17 @@ use honk_core::synth::SAMPLE_RATE;
 #[derive(Debug)]
 pub enum Playback {
     Played,
-    /// No usable output device (headless CI, SSH, containers). Not an error.
+    /// No usable output (headless CI, SSH, containers). Not an error.
     NoDevice(String),
+}
+
+/// Trailing silence so the device has drained the honk's release before the
+/// stream closes; without it the last buffer can be cut off.
+const TAIL_SAMPLES: usize = SAMPLE_RATE as usize / 10;
+
+fn with_tail(mut samples: Vec<f32>) -> Vec<f32> {
+    samples.extend(std::iter::repeat_n(0.0, TAIL_SAMPLES));
+    samples
 }
 
 /// Play mono samples at [`SAMPLE_RATE`], blocking until the sound has finished.
@@ -17,11 +28,26 @@ pub fn play(samples: Vec<f32>) -> Playback {
     if std::env::var_os("HONK_NO_AUDIO").is_some() {
         return Playback::NoDevice("disabled by HONK_NO_AUDIO".into());
     }
-    // alsa-lib prints its own "cannot find card" lines straight to stderr when
-    // there is no sound card (servers, CI). Collect them in a buffer on this
-    // thread instead; honk reports the problem once, in its own words.
-    #[cfg(target_os = "linux")]
-    let _alsa_errors = alsa::Output::local_error_handler().ok();
+    play_on_device(with_tail(samples))
+}
+
+#[cfg(target_os = "linux")]
+fn play_on_device(samples: Vec<f32>) -> Playback {
+    use crate::player::{PLAYERS, Played, play_with};
+    let wav = match honk_core::wav::encode_wav(&samples) {
+        Ok(wav) => wav,
+        Err(e) => return Playback::NoDevice(e.to_string()),
+    };
+    match play_with(PLAYERS, &wav) {
+        Played::Yes => Playback::Played,
+        Played::No(why) => Playback::NoDevice(why),
+    }
+}
+
+#[cfg(not(target_os = "linux"))]
+fn play_on_device(samples: Vec<f32>) -> Playback {
+    use std::num::NonZero;
+
     let mut handle = match rodio::DeviceSinkBuilder::open_default_sink() {
         Ok(h) => h,
         Err(e) => return Playback::NoDevice(e.to_string()),
@@ -40,6 +66,14 @@ pub fn play(samples: Vec<f32>) -> Playback {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn a_silent_tail_protects_the_end_of_the_honk() {
+        let padded = with_tail(vec![0.5; 10]);
+        assert_eq!(padded.len(), 10 + TAIL_SAMPLES);
+        assert!(padded[..10].iter().all(|&s| s == 0.5));
+        assert!(padded[10..].iter().all(|&s| s == 0.0));
+    }
 
     #[test]
     fn honk_no_audio_disables_playback() {

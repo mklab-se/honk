@@ -48,8 +48,9 @@ A two-crate Cargo workspace:
   - `commands/run.rs`: `honk -- cmd`; spawns without a shell, inherits stdio, maps the exit
     status (signals to 128 + n, spawn failure to 127), honks happy or sad.
   - `commands/ai.rs`, `commands/completion.rs`: template plumbing.
-  - `audio.rs`: rodio playback on the default device; no device (or `HONK_NO_AUDIO`) is
-    `Playback::NoDevice`, never an error.
+  - `audio.rs`: playback with a 100 ms silent tail; rodio on macOS/Windows, `player.rs` on
+    Linux. No device (or `HONK_NO_AUDIO`) is `Playback::NoDevice`, never an error.
+  - `player.rs`: Linux only; pipes a WAV into the first working system player.
   - `car.rs`: ASCII car frames (pure, tested) and the stderr animation, only on a TTY.
   - `banner.rs`, `update.rs`: from the template.
 - `crates/honk-core/`: pure and deterministic, no clap, tokio or audio device code.
@@ -89,8 +90,10 @@ shared global config (`~/.config/ailloy/config.yaml`). To call a model from a co
   Current majors: clap 4.6, tokio 1.53, colored 3, dirs 7, thiserror 2, ailloy 3.0, reqwest 0.13.
   YAML is `serde_norway` 0.9, the maintained drop-in fork of the deprecated `serde_yaml`
   (chosen fleet-wide 2026-10-07).
-- Building on Linux needs the ALSA headers (`libasound2-dev`): `rodio` plays through `cpal`/ALSA.
-  Every Linux CI and release job that compiles installs them.
+- Audio: macOS and Windows play through `rodio`; Linux pipes a WAV into `pw-play`, `paplay` or
+  `aplay` (`player.rs`) so building and running there needs no ALSA headers or `libasound`.
+  Do not add `rodio` (or anything pulling `alsa-sys`) back to the Linux build: `cargo install
+  honk` must work on a stock Linux machine.
 - Building from source on Windows needs NASM and CMake on `PATH`, because `aws-lc-rs`
   (reqwest's TLS crypto backend) compiles optimized assembly routines at build time. macOS and Linux need nothing extra.
   The release workflow's Windows leg installs NASM via `ilammy/setup-nasm@v1`; CMake and MSVC are

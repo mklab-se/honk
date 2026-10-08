@@ -110,8 +110,8 @@ Set `HONK_CONFIG_DIR` to use a different directory.
 
 ## Works everywhere
 
-- **Linux** through ALSA, which also covers PulseAudio and PipeWire. The binary needs the ALSA
-  runtime library (`libasound2`, present on any desktop Linux; Homebrew installs it for you).
+- **Linux** through the player your system already has (`pw-play`, `paplay` or `aplay`), so it
+  works with PipeWire, PulseAudio and plain ALSA, with nothing extra to install.
 - **macOS** through CoreAudio.
 - **Windows** through WASAPI.
 
@@ -124,7 +124,7 @@ to silence it on purpose.
 | Method | Command |
 | --- | --- |
 | Homebrew (macOS, Linux) | `brew install mklab-se/tap/honk` |
-| Cargo | `cargo install honk` (on Linux, install `libasound2-dev` first) |
+| Cargo | `cargo install honk` |
 | cargo-binstall (prebuilt, no compiling) | `cargo binstall honk` |
 | Prebuilt binaries | Linux, macOS (Intel and Apple Silicon) and Windows on the [Releases page](https://github.com/mklab-se/honk/releases/latest) |
 

@@ -15,20 +15,18 @@ brew install honk
 
 Upgrade with `brew upgrade honk`.
 
-## Linux runtime requirement
+## Sound on Linux
 
-honk plays sound through ALSA, so the binary links `libasound.so.2`. Every desktop distribution
-ships it; minimal containers may not. Homebrew pulls it in (`alsa-lib`) automatically. For the
-prebuilt archive, install `libasound2` (Debian/Ubuntu) or `alsa-lib` (Fedora, Arch) first.
+On Linux, honk plays through the audio player your system already has: PipeWire's `pw-play`,
+PulseAudio's `paplay` or ALSA's `aplay`, whichever works first. Every desktop distribution ships
+at least one, so there is nothing to install and no audio library to build against. If none is
+present (minimal containers), honk prints one warning and carries on.
 
 ## Cargo (from crates.io)
 
 ```sh
 cargo install honk
 ```
-
-On Linux this compiles against ALSA, so install `libasound2-dev` (Debian/Ubuntu) or
-`alsa-lib-devel` (Fedora) first.
 
 On Windows, building from source needs [NASM](https://www.nasm.us/) and [CMake](https://cmake.org/)
 on `PATH` (plus the Visual Studio Build Tools most Rust installs already have). They're needed to
@@ -76,10 +74,6 @@ cargo audit bin ./honk
 `syft` and `trivy` also understand this format.
 
 ## From source
-
-On Linux, install the ALSA development headers first (honk plays sound through ALSA, which also
-covers PulseAudio and PipeWire): `sudo apt-get install libasound2-dev` on Debian/Ubuntu, or
-`sudo dnf install alsa-lib-devel` on Fedora. macOS and Windows need nothing extra for audio.
 
 ```sh
 git clone https://github.com/mklab-se/honk

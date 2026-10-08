@@ -9,6 +9,9 @@ mod banner;
 mod car;
 mod cli;
 mod commands;
+#[cfg(any(target_os = "linux", all(test, unix)))]
+#[cfg_attr(not(target_os = "linux"), allow(dead_code))]
+mod player;
 mod update;
 
 use cli::Cli;

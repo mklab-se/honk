@@ -63,11 +63,9 @@ ailloy = { version = "3.0", default-features = false, features = ["config-tui"] 
 
 # Audio
 hound = "3.5"
-# Playback only: no decoders, we synthesise everything. Needs ALSA headers
-# (libasound2-dev) to build on Linux.
+# Playback on macOS and Windows only: no decoders, we synthesise everything.
+# Linux plays through the system's player instead, so it needs no ALSA headers.
 rodio = { version = "0.22", default-features = false, features = ["playback"] }
-# Same version cpal uses; only for silencing alsa-lib's stderr chatter on Linux.
-alsa = "0.11"
 
 # Testing
 assert_cmd = "2.2"

@@ -72,6 +72,10 @@ pub fn play_with_car(samples: Vec<f32>, spec: &HonkSpec) -> Playback {
     let height = CAR.len();
     let start = Instant::now();
     for (i, frame) in frames.iter().enumerate() {
+        // Playback ended early (no device): stop instead of honking silently.
+        if player.is_finished() {
+            break;
+        }
         if i > 0 {
             let _ = write!(stderr, "\x1b[{height}A");
         }

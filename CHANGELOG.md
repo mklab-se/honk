@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- `cargo install honk` works on a stock Linux machine again: honk no longer links ALSA there and
+  instead plays through the system's own player (`pw-play`, `paplay` or `aplay`, first that
+  works). The prebuilt Linux binary no longer needs `libasound2`, and the Homebrew formula drops
+  its `alsa-lib` dependency.
+- The end of a honk is no longer clipped on macOS and Windows (a short silent tail lets the device
+  drain).
+- With no audio device, the ASCII car stops at once instead of animating a silent honk.
+
 ## [0.2.0] - 2026-10-08
 
 ### Added
