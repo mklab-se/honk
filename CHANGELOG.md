@@ -22,6 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   location. Out-of-range or unreadable config produces a warning, never a failure.
 - No audio device (CI, SSH, containers) is a warning, not an error; `HONK_NO_AUDIO` disables
   playback on purpose.
+- `honk -- cmd` stays alive on Ctrl-C and lets the command decide how to stop, finds `.cmd` and
+  `.bat` shims such as `npm` on Windows, and keeps the command's exit code even if the honk itself
+  fails (for example an unwritable `--wav` path).
+- On Linux, alsa-lib's own "cannot find card" messages no longer reach stderr; the Homebrew
+  formula depends on `alsa-lib`.
 
 ### Changed
 
