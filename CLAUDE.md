@@ -63,10 +63,11 @@ A two-crate Cargo workspace:
     config (invalid values skipped with warnings), then flags (invalid values are errors).
   - `synth.rs`: `render(&HonkSpec) -> Vec<f32>` at 44.1 kHz mono, `duration_secs`.
   - `wav.rs`: 16-bit mono WAV via `hound`.
-  - `config.rs`: YAML `Config` (`style`, `volume`, `times`). Location: `HONK_CONFIG_DIR`, else
-    `$XDG_CONFIG_HOME/honk` or `~/.config/honk` on Linux and macOS (Ailloy's rule, deliberately
-    not `dirs::config_dir()`, which is `~/Library/Application Support` on macOS), else
-    `%APPDATA%\honk` on Windows.
+  - `config.rs`: YAML `Config` (`style`, `volume`, `times`) in `HONK_CONFIG_DIR`, else
+    `paths::config_dir()`.
+  - `paths.rs`: from rusty-tmpl, the fleet rule. Linux and macOS: `$XDG_CONFIG_HOME/honk` or
+    `~/.config/honk`, `$XDG_CACHE_HOME/honk` or `~/.cache/honk` (same as Ailloy). Windows: native
+    `%APPDATA%` / `%LOCALAPPDATA%`. Never call `dirs::config_dir()`/`cache_dir()` directly.
   - `error.rs`: `thiserror` `Error` enum + `Result` alias.
 
 ## Testing

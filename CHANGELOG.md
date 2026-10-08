@@ -9,9 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- On macOS, `config.yaml` now lives in `~/.config/honk/` (or `$XDG_CONFIG_HOME/honk/`), like on
-  Linux and like Ailloy, instead of `~/Library/Application Support/honk/`. If you made a config
-  there, move it: `mv ~/Library/Application\ Support/honk ~/.config/honk`. Windows is unchanged.
+- On macOS, honk now uses the same folders as on Linux, like every MKLab tool and Ailloy:
+  `config.yaml` in `~/.config/honk/` (or `$XDG_CONFIG_HOME/honk/`) instead of
+  `~/Library/Application Support/honk/`, and the update-check cache in `~/.cache/honk/` (or
+  `$XDG_CACHE_HOME/honk/`) instead of `~/Library/Caches/honk/`. The old locations are not read;
+  if you made a config there, move it: `mv ~/Library/Application\ Support/honk ~/.config/honk`.
+  Windows keeps its native folders.
 
 ## [0.3.0] - 2026-10-08
 

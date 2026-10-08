@@ -31,7 +31,6 @@ tracing-subscriber.workspace = true
 reqwest.workspace = true
 semver.workspace = true
 chrono.workspace = true
-dirs.workspace = true
 
 [target.'cfg(not(target_os = "linux"))'.dependencies]
 rodio.workspace = true

@@ -6,6 +6,7 @@
 
 pub mod config;
 pub mod error;
+pub mod paths;
 pub mod spec;
 pub mod style;
 pub mod synth;
