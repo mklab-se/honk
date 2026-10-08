@@ -8,6 +8,7 @@ pub mod config;
 pub mod error;
 pub mod spec;
 pub mod style;
+pub mod synth;
 
 pub use error::{Error, Result};
 pub use spec::{HonkSpec, Mood, Overrides};
