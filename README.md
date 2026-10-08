@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <strong>honk 0.3</strong> is here: a detailed Braille roadster, the car horn as the new default, and a binary a quarter smaller.
+  <strong>honk 0.4</strong> is here: one config folder, <code>~/.config/honk</code>, on both macOS and Linux, like every MKLab tool.
   <a href="CHANGELOG.md">What's new</a>
 </p>
 
