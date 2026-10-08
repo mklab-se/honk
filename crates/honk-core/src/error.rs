@@ -24,6 +24,10 @@ pub enum Error {
     #[error("{0}")]
     InvalidSpec(String),
 
+    /// Writing a WAV file failed.
+    #[error("could not write WAV: {0}")]
+    Wav(String),
+
     /// The platform did not expose a config directory.
     #[error("could not determine the configuration directory")]
     NoConfigDir,

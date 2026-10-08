@@ -9,6 +9,7 @@ pub mod error;
 pub mod spec;
 pub mod style;
 pub mod synth;
+pub mod wav;
 
 pub use error::{Error, Result};
 pub use spec::{HonkSpec, Mood, Overrides};

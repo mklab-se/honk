@@ -58,6 +58,9 @@ dirs = "7.0"
 # AI
 ailloy = { version = "3.0", default-features = false, features = ["config-tui"] }
 
+# Audio
+hound = "3.5"
+
 # Testing
 assert_cmd = "2.2"
 predicates = "3.1"
