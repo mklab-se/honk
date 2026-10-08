@@ -5,3 +5,4 @@
 
 pub mod ai;
 pub mod completion;
+pub mod honk;

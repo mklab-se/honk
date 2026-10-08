@@ -1,8 +1,5 @@
 //! Playing samples on the default output device.
 
-// Wired into the honk command in the next commit.
-#![allow(dead_code)]
-
 use std::num::NonZero;
 
 use honk_core::synth::SAMPLE_RATE;

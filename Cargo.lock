@@ -1016,6 +1016,7 @@ dependencies = [
  "colored",
  "dirs",
  "honk-core",
+ "hound",
  "predicates",
  "reqwest",
  "rodio",

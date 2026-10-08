@@ -37,6 +37,7 @@ rodio.workspace = true
 assert_cmd.workspace = true
 predicates.workspace = true
 tempfile.workspace = true
+hound.workspace = true
 
 [package.metadata.binstall]
 pkg-url = "{ repo }/releases/download/v{ version }/honk-v{ version }-{ target }.{ archive-format }"

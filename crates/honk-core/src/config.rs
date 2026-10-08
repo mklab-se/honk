@@ -24,7 +24,11 @@ pub struct Config {
 
 impl Config {
     /// Return the path to the config file, creating no files.
+    /// `HONK_CONFIG_DIR` overrides the directory (used by tests and power users).
     pub fn config_path() -> Result<PathBuf> {
+        if let Some(dir) = std::env::var_os("HONK_CONFIG_DIR") {
+            return Ok(PathBuf::from(dir).join("config.yaml"));
+        }
         let dir = dirs::config_dir().ok_or(Error::NoConfigDir)?;
         Ok(dir.join("honk").join("config.yaml"))
     }

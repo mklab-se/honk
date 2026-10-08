@@ -49,9 +49,14 @@ async fn main() -> Result<()> {
 
     let result = cli.run().await;
 
+    // Never hold up exit for the update check: give it a moment, then abandon it.
     if let Some(handle) = update_handle {
-        let _ = handle.await;
+        let _ = tokio::time::timeout(std::time::Duration::from_millis(300), handle).await;
     }
 
-    result
+    match result {
+        Ok(0) => Ok(()),
+        Ok(code) => std::process::exit(code),
+        Err(e) => Err(e),
+    }
 }
