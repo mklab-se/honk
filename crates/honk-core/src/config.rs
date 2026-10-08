@@ -1,9 +1,8 @@
 //! Tool configuration.
 //!
-//! A minimal, reusable starting point: a YAML config stored in the platform
-//! config directory (`~/.config/honk/config.yaml` on Linux/macOS). No
-//! command uses it yet; it's here so a new tool has somewhere obvious to grow
-//! its settings. Add fields to [`Config`] and they round-trip automatically.
+//! A YAML config stored in the platform config directory
+//! (`~/.config/honk/config.yaml` on Linux) holding the user's default honk:
+//! style, volume and number of honks. Command-line flags override it.
 
 use std::path::PathBuf;
 
@@ -15,8 +14,12 @@ use crate::error::{Error, Result};
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 #[serde(default)]
 pub struct Config {
-    /// Example setting. Replace with your tool's real configuration.
-    pub example: Option<String>,
+    /// Default horn style.
+    pub style: Option<crate::style::Style>,
+    /// Default volume, 0.0 to 1.0.
+    pub volume: Option<f32>,
+    /// Default number of honks, 1 to 10.
+    pub times: Option<u32>,
 }
 
 impl Config {
@@ -51,41 +54,44 @@ impl Config {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::style::Style;
 
     #[test]
     fn round_trips_through_yaml() {
         let cfg = Config {
-            example: Some("hello".to_string()),
+            style: Some(Style::Awooga),
+            volume: Some(0.5),
+            times: Some(3),
         };
         let yaml = serde_norway::to_string(&cfg).unwrap();
         let parsed: Config = serde_norway::from_str(&yaml).unwrap();
-        assert_eq!(parsed.example.as_deref(), Some("hello"));
+        assert_eq!(parsed.style, Some(Style::Awooga));
+        assert_eq!(parsed.volume, Some(0.5));
+        assert_eq!(parsed.times, Some(3));
     }
 
     #[test]
     fn serialized_output_is_stable() {
         // Pins the exact bytes `save` writes, so a YAML library change cannot
         // silently alter existing config files.
-        let set = Config {
-            example: Some("hello".to_string()),
-        };
-        assert_eq!(serde_norway::to_string(&set).unwrap(), "example: hello\n");
-        let tricky = Config {
-            example: Some("a: b\nline two".to_string()),
+        let cfg = Config {
+            style: Some(Style::Car),
+            volume: Some(0.5),
+            times: Some(2),
         };
         assert_eq!(
-            serde_norway::to_string(&tricky).unwrap(),
-            "example: |-\n  a: b\n  line two\n"
+            serde_norway::to_string(&cfg).unwrap(),
+            "style: car\nvolume: 0.5\ntimes: 2\n"
         );
         assert_eq!(
             serde_norway::to_string(&Config::default()).unwrap(),
-            "example: null\n"
+            "style: null\nvolume: null\ntimes: null\n"
         );
     }
 
     #[test]
     fn empty_yaml_uses_defaults() {
         let parsed: Config = serde_norway::from_str("{}").unwrap();
-        assert!(parsed.example.is_none());
+        assert!(parsed.style.is_none() && parsed.volume.is_none() && parsed.times.is_none());
     }
 }

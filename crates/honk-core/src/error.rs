@@ -20,6 +20,10 @@ pub enum Error {
     #[error("config error: {0}")]
     Config(String),
 
+    /// A honk parameter is out of range.
+    #[error("{0}")]
+    InvalidSpec(String),
+
     /// The platform did not expose a config directory.
     #[error("could not determine the configuration directory")]
     NoConfigDir,
