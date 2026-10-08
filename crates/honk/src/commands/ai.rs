@@ -24,9 +24,7 @@ const CAPABILITIES: &[&str] = &["chat"];
 pub async fn run(cmd: Option<AiCommands>) -> Result<()> {
     match cmd {
         None | Some(AiCommands::Status) => config_tui::print_ai_status("honk", CAPABILITIES),
-        Some(AiCommands::Test { message }) => {
-            config_tui::run_test_chat("honk", message).await
-        }
+        Some(AiCommands::Test { message }) => config_tui::run_test_chat("honk", message).await,
         Some(AiCommands::Enable) => config_tui::enable_ai("honk"),
         Some(AiCommands::Disable) => config_tui::disable_ai("honk"),
         Some(AiCommands::Config) => {

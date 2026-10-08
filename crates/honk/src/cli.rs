@@ -86,10 +86,9 @@ impl Cli {
                 crate::banner::print_banner_with_version();
                 Ok(())
             }
-            // No subcommand: the almost-empty default. Replace this with your
-            // tool's behavior, or route to a real command. `--help` still works.
+            // No subcommand: honk. Stage 1 prints the honk; v0.2 plays it.
             None => {
-                println!("Hello world!");
+                println!("Honk, honk!");
                 Ok(())
             }
         }
