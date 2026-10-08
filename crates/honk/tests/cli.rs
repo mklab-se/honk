@@ -206,3 +206,12 @@ fn missing_command_is_exit_127() {
             "definitely-not-a-real-command-honk",
         ));
 }
+
+#[test]
+fn no_car_art_when_stderr_is_not_a_terminal() {
+    honk()
+        .assert()
+        .success()
+        .stderr(predicate::str::contains("HONK!").not())
+        .stderr(predicate::str::contains("(_)").not());
+}

@@ -37,8 +37,12 @@ pub fn honk(args: &HonkArgs, mood: Mood, quiet: bool) -> Result<()> {
         return Ok(());
     }
 
-    let _ = quiet; // used by the car in Task 14
-    if let Playback::NoDevice(why) = audio::play(samples) {
+    let playback = if quiet {
+        audio::play(samples)
+    } else {
+        crate::car::play_with_car(samples, &spec)
+    };
+    if let Playback::NoDevice(why) = playback {
         warn(&format!(
             "no audio output available ({why}); honk silently skipped"
         ));

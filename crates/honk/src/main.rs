@@ -6,6 +6,7 @@ use tracing_subscriber::{EnvFilter, fmt, prelude::*};
 
 mod audio;
 mod banner;
+mod car;
 mod cli;
 mod commands;
 mod update;
