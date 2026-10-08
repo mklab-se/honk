@@ -266,3 +266,19 @@ fn sigint_to_honk_does_not_abandon_the_wrapped_command() {
     let status = child.wait().unwrap();
     assert_eq!(status.code(), Some(0), "honk died early: {status:?}");
 }
+
+/// npm, yarn, gradlew and friends are `.cmd` shims on Windows; `honk -- npm test`
+/// must run them, not report "not found".
+#[cfg(windows)]
+#[test]
+fn windows_cmd_shims_on_path_are_found() {
+    let dir = tempfile::tempdir().unwrap();
+    std::fs::write(dir.path().join("honkshim.cmd"), "@exit /b 3\r\n").unwrap();
+    let mut path = vec![dir.path().to_path_buf()];
+    path.extend(std::env::split_paths(&std::env::var_os("PATH").unwrap()));
+    honk()
+        .env("PATH", std::env::join_paths(path).unwrap())
+        .args(["--", "honkshim"])
+        .assert()
+        .code(3);
+}

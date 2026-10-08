@@ -52,6 +52,19 @@ jobs:
         if: runner.os == 'Windows'
         uses: ilammy/setup-nasm@v1
       - run: cargo test --workspace
+      # Runners have no sound card: the real no-device path must be one warning
+      # line and exit 0, never a failure or a wall of audio-library noise.
+      - name: Headless honk
+        shell: bash
+        env:
+          HONK_NO_UPDATE_CHECK: "1"
+        run: |
+          set +e
+          cargo run -q -p honk -- --times 1 2> stderr.txt
+          code=$?
+          echo "exit code: $code"; echo "stderr:"; cat stderr.txt
+          test "$code" -eq 0 || exit 1
+          test "$(grep -c . stderr.txt)" -le 1 || { echo "::error::expected at most one stderr line"; exit 1; }
 
   clippy:
     name: Clippy

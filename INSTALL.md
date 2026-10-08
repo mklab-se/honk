@@ -15,6 +15,12 @@ brew install honk
 
 Upgrade with `brew upgrade honk`.
 
+## Linux runtime requirement
+
+honk plays sound through ALSA, so the binary links `libasound.so.2`. Every desktop distribution
+ships it; minimal containers may not. Homebrew pulls it in (`alsa-lib`) automatically. For the
+prebuilt archive, install `libasound2` (Debian/Ubuntu) or `alsa-lib` (Fedora, Arch) first.
+
 ## Cargo (from crates.io)
 
 ```sh

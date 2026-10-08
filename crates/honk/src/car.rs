@@ -43,10 +43,26 @@ pub fn frames(honks: u32) -> Vec<String> {
     out
 }
 
+/// Whether the terminal understands the cursor-up escape the animation redraws
+/// with. Windows consoles need virtual terminal processing switched on first;
+/// colored does that on the console behind stdout, which a terminal session
+/// shares with stderr. If it cannot (old conhost, redirected stdout), skip the
+/// car rather than print raw escapes.
+fn ansi_ok() -> bool {
+    #[cfg(windows)]
+    {
+        colored::control::set_virtual_terminal(true).is_ok()
+    }
+    #[cfg(not(windows))]
+    {
+        true
+    }
+}
+
 /// Play the honk; animate the car on stderr if it is a terminal.
 pub fn play_with_car(samples: Vec<f32>, spec: &HonkSpec) -> Playback {
     let mut stderr = std::io::stderr();
-    if !stderr.is_terminal() {
+    if !stderr.is_terminal() || !ansi_ok() {
         return audio::play(samples);
     }
     let frames = frames(spec.times);

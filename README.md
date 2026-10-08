@@ -110,7 +110,8 @@ Set `HONK_CONFIG_DIR` to use a different directory.
 
 ## Works everywhere
 
-- **Linux** through ALSA, which also covers PulseAudio and PipeWire.
+- **Linux** through ALSA, which also covers PulseAudio and PipeWire. The binary needs the ALSA
+  runtime library (`libasound2`, present on any desktop Linux; Homebrew installs it for you).
 - **macOS** through CoreAudio.
 - **Windows** through WASAPI.
 
