@@ -1,138 +1,75 @@
-<p align="center"><img src="https://raw.githubusercontent.com/mklab-se/honk/main/media/honk-horizontal.png" width="600"></p>
-
 <p align="center">
-<a href="https://github.com/mklab-se/honk/actions/workflows/ci.yml"><img src="https://github.com/mklab-se/honk/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-<a href="https://crates.io/crates/honk"><img src="https://img.shields.io/crates/v/honk.svg" alt="crates.io"></a>
-<a href="https://github.com/mklab-se/honk/releases/latest"><img src="https://img.shields.io/github/v/release/mklab-se/honk" alt="GitHub Release"></a>
-<a href="https://github.com/mklab-se/homebrew-tap/blob/main/Formula/honk.rb"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmklab-se%2Fhomebrew-tap%2Fmain%2FFormula%2Fhonk.rb&search=%5Cd%2B%5C.%5Cd%2B%5C.%5Cd%2B&label=homebrew&prefix=v&color=orange" alt="Homebrew"></a>
-<a href="https://github.com/mklab-se/honk/blob/main/LICENSE"><img src="https://img.shields.io/crates/l/honk.svg" alt="License"></a>
+  <img src="https://raw.githubusercontent.com/mklab-se/honk/main/media/honk-horizontal.png" alt="honk" width="600">
 </p>
 
-<!-- "What's new" callout: keep it right after the badges and refresh it on every minor/major
-     release (version and a one-line summary of the headline changes). Only link CHANGELOG.md. -->
 <p align="center">
-  <strong>honk 0.1</strong> is here: a ready-to-scaffold Rust CLI workspace with Ailloy AI,
-  shell completions, an update checker and auditable releases with SBOMs.<br>
-  <a href="CHANGELOG.md"><strong>What's new</strong></a>
+  <a href="https://github.com/mklab-se/honk/actions/workflows/ci.yml"><img src="https://github.com/mklab-se/honk/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://crates.io/crates/honk"><img src="https://img.shields.io/crates/v/honk.svg" alt="crates.io"></a>
+  <a href="https://github.com/mklab-se/honk/releases/latest"><img src="https://img.shields.io/github/v/release/mklab-se/honk" alt="GitHub Release"></a>
+  <a href="https://github.com/mklab-se/homebrew-tap/blob/main/Formula/honk.rb"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmklab-se%2Fhomebrew-tap%2Fmain%2FFormula%2Fhonk.rb&search=%5Cd%2B%5C.%5Cd%2B%5C.%5Cd%2B&label=homebrew&prefix=v&color=orange" alt="Homebrew"></a>
+  <a href="https://github.com/mklab-se/honk/blob/main/LICENSE"><img src="https://img.shields.io/crates/l/honk.svg" alt="License"></a>
+</p>
+
+<p align="center">
+  <strong>honk 0.1</strong> is here: the very first honk, in text form. Real sound arrives in 0.2.
+  <a href="CHANGELOG.md">What's new</a>
 </p>
 
 # honk
 
-A **template repository** for building Rust command-line tools, pre-wired with the conventions used
-across MKLab's CLIs ([cosq](https://github.com/mklab-se/cosq),
-[pidge](https://github.com/mklab-se/pidge), [rigg](https://github.com/mklab-se/rigg), …):
+**Make your computer honk like an old-school car.** Honk, honk!
 
-- 📦 A Cargo **workspace** (`honk` binary + `honk-core` library)
-- 🧰 A [clap](https://docs.rs/clap)-derive CLI with global flags (`-v`, `-q`, `--no-color`) and `--help`
-- 🤖 An `ai` subcommand backed by [**Ailloy**](https://crates.io/crates/ailloy), MKLab's shared AI config
-- 🐚 Static **and** dynamic shell completions
-- 🔔 A background **crates.io update checker**
-- ⚙️ **GitHub Actions** CI (check / test / clippy / fmt) and a release pipeline
-- 🍺 Automated publishing to **crates.io** and **Homebrew**
-- 🪄 A `/release` skill that drives the whole release flow
+Long build? Slow test suite? A deploy that takes forever? Put `honk` at the end and go get a
+coffee. Your computer tells you when it is done, the way a 1920s roadster would.
 
-Run with no subcommand, it just prints `Hello world!`. Everything else is plumbing waiting for your logic.
+## Quick start
 
-## Using this template
-
-1. Click **“Use this template”** on GitHub to create a new repository.
-2. Pick a name for your tool and rename everything in one pass. From the repo root:
-
-   ```sh
-   NEW=mytool   # your new tool name (kebab-case)
-
-   # Rename crate directories
-   git mv crates/honk       "crates/$NEW"
-   git mv crates/honk-core  "crates/$NEW-core"
-   git mv media/honk-horizontal.png "media/$NEW-horizontal.png"
-
-   # Replace the name in every file (macOS sed shown; on Linux use `sed -i`).
-   # CLAUDE.md is excluded on purpose: its "Template lineage" section must keep
-   # pointing at the upstream honk template (see step 4).
-   grep -rl --exclude-dir=.git --exclude-dir=target --exclude=CLAUDE.md 'honk' . \
-     | xargs sed -i '' "s/honk/$NEW/g; s/honk/${NEW//-/_}/g"
-
-   # The block-letter banner in src/banner.rs and the ASCII art are template-specific;
-   # regenerate or edit them for your tool.
-   cargo build && cargo test
-   ```
-
-3. Replace `media/<tool>-horizontal.png` with your own artwork, and rewrite this README. Keep the
-   "What's new" callout right after the badges (rewrite its text for your tool) and refresh it on
-   every minor/major release.
-4. Edit `CLAUDE.md` by hand: rename the architecture/path references to your tool, but **leave the
-   "Template lineage" section pointing at `mklab-se/honk`** so future agents know where the
-   scaffold came from.
-5. Set up the release secrets (see [Releasing](#releasing)).
-
-## Build & run
-
-```sh
-cargo run                    # prints "Hello world!"
-cargo run -- --help          # show the CLI help
-cargo run -- version         # banner + version
-cargo run -- ai              # AI status (via Ailloy)
-cargo run -- completion zsh  # generate a zsh completion script
-cargo test --workspace       # run the unit tests
+```bash
+brew install mklab-se/tap/honk
 ```
 
-### Install
-
-See [INSTALL.md](INSTALL.md) for Homebrew, `cargo install`, `cargo binstall`, and from-source instructions.
-
-## AI integration (Ailloy)
-
-The `ai` subcommand reuses MKLab's shared [Ailloy](https://crates.io/crates/ailloy) configuration
-(`~/.config/ailloy/config.yaml`), so every tool shares the same providers and API keys.
-
-```sh
-honk ai          # show status
-honk ai config   # interactively configure a provider/model
-honk ai test     # send a test message
-honk ai enable   # / disable: toggle AI for this tool
+```bash
+honk
 ```
 
-To call a model from your own commands, use `ailloy::Client`; see `crates/honk/src/commands/ai.rs`
-for where the integration lives.
-
-## Releasing
-
-Releases are driven by the [`/release`](.claude/skills/release/SKILL.md) skill (run it in Claude
-Code with `major`, `minor`, or `patch`). It updates the toolchain and dependencies, runs the CI
-gates, bumps the version, updates the changelog, then commits, pushes, and tags `vX.Y.Z`. Pushing
-the tag triggers `.github/workflows/release.yml`, which:
-
-1. Re-runs the full CI suite
-2. Builds [auditable](https://github.com/rust-secure-code/cargo-auditable) binaries for Linux, macOS
-   (Intel + ARM), and Windows, with a CycloneDX SBOM per target
-3. Creates a GitHub Release with the archives and SBOMs (see
-   [INSTALL.md](INSTALL.md#software-bill-of-materials-sbom) for how to read them)
-4. Publishes `honk-core` then `honk` to crates.io
-5. Updates the Homebrew formula in [`mklab-se/homebrew-tap`](https://github.com/mklab-se/homebrew-tap)
-
-### Required secrets
-
-Configure these once on the GitHub repository (these are the same secrets used by the other MKLab tools):
-
-| Secret | Where | Purpose | How to create |
-| --- | --- | --- | --- |
-| `CARGO_REGISTRY_TOKEN` | Environment **`crates-io`** | Publish to crates.io | [crates.io/settings/tokens](https://crates.io/settings/tokens) → new token with publish scope |
-| `HOMEBREW_TAP_TOKEN` | Repository secret | Push the formula to the tap | A GitHub PAT with `repo` scope for `mklab-se/homebrew-tap` |
-
-If `HOMEBREW_TAP_TOKEN` is missing, the release still succeeds; the Homebrew step just logs a warning.
-
-## Development
-
-```sh
-cargo fmt --all              # format
-cargo clippy --workspace --all-targets -- -D warnings   # lint (matches CI)
-cargo test --workspace       # test
+```text
+Honk, honk!
 ```
 
-The CLI lives in `crates/honk` and reusable logic in `crates/honk-core`. To add a
-command: declare it in `cli.rs` (`Commands` enum), add a module under `commands/`, and wire the
-dispatch arm in `Cli::run`. See [CLAUDE.md](CLAUDE.md) for the architecture in more detail.
+## Install
+
+| Method | Command |
+| --- | --- |
+| Homebrew (macOS, Linux) | `brew install mklab-se/tap/honk` |
+| Cargo | `cargo install honk` |
+| cargo-binstall (prebuilt, no compiling) | `cargo binstall honk` |
+| Prebuilt binaries | Linux, macOS (Intel and Apple Silicon) and Windows on the [Releases page](https://github.com/mklab-se/honk/releases/latest) |
+
+Every release ships a CycloneDX SBOM per platform. Shell completions, building from source and
+more are in [INSTALL.md](INSTALL.md).
+
+## Coming in 0.2: the real honk
+
+0.1 proves the pipeline end to end on Linux, macOS and Windows. 0.2 makes the noise:
+
+- **Real sound, synthesised on the fly.** No audio files; works on Linux, macOS and Windows.
+- **Five horns:** `bulb`, `awooga`, `car`, `truck` and `clown`.
+- **Notifier mode:** `honk --status $?` and `honk -- cargo build` give a happy honk on success
+  and a sad, down-bending honk on failure, and pass the exit code straight through.
+- **Shape it:** `--times`, `--long`, `--pitch`, `--volume`, or `--wav out.wav` to keep the honk.
+- **An ASCII car** that honks along in your terminal.
+
+## Part of the MKLab toolbox
+
+honk is one of a family of small, sharp command-line tools from [MKLab](https://mklab.se):
+[ailloy](https://github.com/mklab-se/ailloy) (vendor-flexible AI for Rust tools),
+[cosq](https://github.com/mklab-se/cosq) (query Azure Cosmos DB),
+[deemer](https://github.com/mklab-se/deemer) (AI-judged integration tests),
+[mdeck](https://github.com/mklab-se/mdeck) (Markdown presentations),
+[pidge](https://github.com/mklab-se/pidge) (e-mail and calendar for your AI agent) and
+[rigg](https://github.com/mklab-se/rigg) (configuration as code for Azure AI Search and Microsoft
+Foundry).
 
 ## License
 
-[MIT](LICENSE) © Kristofer Liljeblad
+[MIT](LICENSE)

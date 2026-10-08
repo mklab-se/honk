@@ -1,8 +1,5 @@
 # Installing honk
 
-> `honk` is a template; these instructions become real once you publish your renamed tool.
-> Until then they document the install paths the release pipeline sets up.
-
 ## Homebrew (macOS / Linux)
 
 ```sh
