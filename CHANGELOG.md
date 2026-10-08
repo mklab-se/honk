@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.3.0] - 2026-10-08
 
 ### Added
 
@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The default horn is now `car` (the dual-tone car horn) instead of `bulb`. `--style bulb` or
   `style: bulb` in `config.yaml` brings the old default back.
+- README: honk is now presented as a toy with a job, including a "Hear it, don't watch it"
+  section on eyes-free use and a screen reader tip (`-q` hides the Braille car).
 
 ### Removed
 

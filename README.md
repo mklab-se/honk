@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <strong>honk 0.2</strong> is here: real, synthesised honks in five styles, plus notifier mode.
+  <strong>honk 0.3</strong> is here: a detailed Braille roadster, the car horn as the new default, and a binary a quarter smaller.
   <a href="CHANGELOG.md">What's new</a>
 </p>
 
@@ -19,8 +19,9 @@
 
 **Make your computer honk like an old-school car.** Honk, honk!
 
-Long build? Slow test suite? A deploy that takes forever? Put `honk` at the end and go get a
-coffee. Your computer tells you when it is done, the way a 1920s roadster would.
+honk is a toy with a job. Put it after a long build, a test run or a deploy, and your computer
+tells you how it went with a sound you can't miss: a cheerful honk when it worked, a sad, sagging
+one when it failed. You don't have to keep the terminal in view, or look at a screen at all.
 
 ## Quick start
 
@@ -52,6 +53,23 @@ cargo build && honk       # tell me when it's done
                                  ⠳⡘⢿⣿⣄⣧⣤⠿⢁⣾⠟        ⠉⠙⠛⠋⠉
                                   ⠈⠲⢬⣉⣉⣡⡴⠟⠁
 ```
+
+## Hear it, don't watch it
+
+Most "it's done" signals are visual: a pop-up, a badge, a red line in a terminal you have to be
+looking at. honk tells you through your ears instead.
+
+- **Know the outcome without looking.** Success and failure sound different: the happy honk
+  bends up at the end, the sad one is longer and sags down. You hear whether it worked, not just
+  that it finished.
+- **Tell jobs apart by ear.** Give each long job its own horn, and you know which one finished
+  from across the room: `honk --style truck -- ./deploy.sh`, `honk --style clown -- cargo test`.
+- **Step away from the screen.** Make coffee, read on paper, rest your eyes, or work in another
+  window. The honk comes to you.
+- **Works with screen readers.** honk never writes to stdout, the wrapped command's output passes
+  through untouched, and any problem is one plain-text line on stderr. The car is decoration only:
+  a screen reader would read its Braille dots out as dot patterns, so add `-q` (or
+  `alias honk='honk -q'`) to switch it off.
 
 ## Five horns
 
@@ -129,7 +147,7 @@ Set `HONK_CONFIG_DIR` to use a different directory.
 
 No speaker? No problem: on a headless server, in CI or over SSH, honk prints one warning and
 exits 0 (or with the wrapped command's code), so it never breaks a build. Set `HONK_NO_AUDIO=1`
-to silence it on purpose.
+to turn the sound off on purpose (honk still prints that one warning line).
 
 ## Install
 
